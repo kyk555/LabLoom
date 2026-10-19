@@ -1,0 +1,18 @@
+# 换行策略：默认交给 git 判断；生成物单独钉死，避免 clone 后整文件假 diff
+* text=auto
+
+# 脚本生成的交互页面 / 报告固定 LF 输出（且「内容没变就不重写」）。
+# 按原字节入库，否则 autocrlf 把 LF 转 CRLF，重跑一次脚本就产生整文件假 diff。
+样例/**/*.html -text
+报告/**/*.html -text
+工具/**/*.html -text
+
+# 实验素材是二进制，不做换行转换、不做 diff
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.mp4 binary
+*.pdf binary
+*.zip binary

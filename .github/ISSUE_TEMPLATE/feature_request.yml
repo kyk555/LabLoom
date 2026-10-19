@@ -1,0 +1,77 @@
+name: 需求
+description: 新增能力、调整方向、补充样本或规则。写清「验收标准」，否则不算需求。
+title: "[需求] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > 先看 `docs/01-验证计划.md`：**这轮要验证什么**。计划外的功能先说明为什么现在做。
+        > 需求要素：目标 / 涉及模块 / 输入输出 / 验收标准 / 是否触碰合规红线。
+
+  - type: input
+    id: goal
+    attributes:
+      label: 目标（一句话）
+      description: 做完之后，谁能多做成一件事。
+      placeholder: 例：给「误差分析型」样本加自动配平检查，生成前就能拦下未配平的方程式
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: 为什么现在做（证据）
+      description: 来自哪条验证结论 / 哪个 issue / 哪位用户的原话（用 T1 / P1 编号，不写真实姓名）。
+      render: text
+      placeholder: |
+        验证记录 2026-10-22：3 位教师（T1/T2/T3）都先问「这个方程式对不对」；
+        关联 issue #4。
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: 涉及模块与改动范围
+      description: 内容（IR）/ 校验 / 渲染 / 文档 / 工具，尽量具体到文件。
+      render: text
+      placeholder: 校验/规则_化学.py（新增配平规则）、样例/回归/（补 3 条反例）
+    validations:
+      required: true
+
+  - type: textarea
+    id: accept
+    attributes:
+      label: 验收标准（可验证）
+      description: 写成能被一条命令或一次人工核对判定通过的形式。
+      render: text
+      placeholder: |
+        1. 未配平方程式 3 条 → 全部被拦下；
+        2. 已配平样本 5 条 → 零误杀；
+        3. python -B -m unittest 测试_校验.py 全绿。
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 优先级
+      options:
+        - P0 阻塞（不做就没法继续验证）
+        - P1 重要（这轮内做完）
+        - P2 可延后（记下来，先不做）
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: compliance
+    attributes:
+      label: 合规自查
+      options:
+        - label: 不引入面向未成年人的自由 prompt 直出
+          required: true
+        - label: 不采集学生姓名 / 头像 / 语音 / 位置
+          required: true
+        - label: 新增内容带依据来源（教材 / 课标 / 权威资料）
+          required: true

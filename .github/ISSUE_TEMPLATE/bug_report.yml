@@ -1,0 +1,83 @@
+name: 内容错误 / 异常
+description: 实验内容有学科错误、参数不对、因果颠倒、渲染异常。「错误原文 + 正确依据」是硬要求，推测不算。
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > 先看 `.clinerules/01-内容准确性与合规红线.md` 的错误分级：致命 / 严重 / 轻微处理方式不同。
+        > **贴错误内容请贴原文**，不要概括成「生成得不对」。
+        > 如果是致命级（结论错 / 有安全风险），先把该样本下线再说。
+
+  - type: input
+    id: symptom
+    attributes:
+      label: 一句话现象
+      description: 谁、在哪个环节、看到了什么错误。
+      placeholder: 例：初中物理·杠杆样本里，动力臂画到了支点另一侧，导致力矩方向反了
+    validations:
+      required: true
+
+  - type: input
+    id: scope
+    attributes:
+      label: 学科与学段
+      description: 如「初中化学 · 九年级上」「小学科学 · 五年级」。
+      placeholder: 初中物理 · 八年级下
+    validations:
+      required: true
+
+  - type: textarea
+    id: wrong
+    attributes:
+      label: 错误内容（原文）
+      description: 直接把出错的那段贴上来（操作步骤 / 参数 / 结论 / 页面表现）。
+      render: text
+      placeholder: 现象：…… 结论：……（原文照抄）
+    validations:
+      required: true
+
+  - type: textarea
+    id: right
+    attributes:
+      label: 正确依据（来源 + 位置）
+      description: 教材页码 / 课程标准条款 / 权威资料链接 + 抓取时间。没有依据的「我觉得」不算。
+      render: text
+      placeholder: |
+        人教版八年级下册 P12，杠杆平衡条件：F1·l1 = F2·l2，力臂是支点到力作用线的距离。
+        链接：https://…（抓取时间：2026-10-20）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: 影响级别
+      options:
+        - 致命（结论错 / 有安全风险，必须下线）
+        - 严重（参数、单位、因果错，不出危险）
+        - 轻微（表述、排版、术语不统一）
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: 复现方式
+      description: 哪份样本（文件名 / 链接 / 版本）、怎么走到这一步。能照做才算复现。
+      render: shell
+      placeholder: |
+        样本：样例/初中物理/杠杆-01.html（版本 2026-10-20）
+        步骤：打开页面 → 拖动钩码到左侧第 2 格 → 观察力矩箭头方向
+    validations:
+      required: true
+
+  - type: textarea
+    id: checked
+    attributes:
+      label: 已做的核查
+      description: 是否全量回查过同模板其他样本？是否已登记到回归集？
+      placeholder: 已回查同批 4 份样本，另 1 份有同样问题；已加入 样例/回归/
+    validations:
+      required: false

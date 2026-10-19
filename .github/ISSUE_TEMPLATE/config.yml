@@ -1,0 +1,17 @@
+# 新建 issue 时的入口配置：禁用空白 issue，把「先读文档」放在最前面。
+# 私有仓库下链接同样有效（成员登录后可见）。
+blank_issues_enabled: false
+
+contact_links:
+  - name: 项目定位与合规红线（README）
+    url: https://github.com/kyk555/LabLoom/blob/main/README.md
+    about: 当前阶段、相信/不相信清单、合规红线、下一步
+  - name: 内容准确性与合规红线（.clinerules/01）
+    url: https://github.com/kyk555/LabLoom/blob/main/.clinerules/01-%E5%86%85%E5%AE%B9%E5%87%86%E7%A1%AE%E6%80%A7%E4%B8%8E%E5%90%88%E8%A7%84%E7%BA%A2%E7%BA%BF.md
+    about: 错误分级（致命/严重/轻微）、必备字段、学科专项、安全模板
+  - name: 验证计划与决策门（docs/01）
+    url: https://github.com/kyk555/LabLoom/blob/main/docs/01-%E9%AA%8C%E8%AF%81%E8%AE%A1%E5%88%92.md
+    about: 这轮验证要回答什么、通过线在哪、什么情况算失败
+  - name: 增量开发与交付（.clinerules/04）
+    url: https://github.com/kyk555/LabLoom/blob/main/.clinerules/04-%E5%A2%9E%E9%87%8F%E5%BC%80%E5%8F%91%E4%B8%8E%E4%BA%A4%E4%BB%98.md
+    about: 动手前三步、禁止臆造、范围纪律、交付五段式
