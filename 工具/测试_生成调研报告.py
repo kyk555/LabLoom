@@ -33,8 +33,8 @@ class TestData(unittest.TestCase):
         for e in R.EVIDENCE:
             self.assertTrue(e["url"].startswith("http"))
             self.assertIn(e["level"], ("E1", "E2", "E3", "E4"))
-        # 一手来源至少 10 条（v1.1 补入 5 条一手公文），否则报告的证据强度不足
-        self.assertGreaterEqual(sum(1 for e in R.EVIDENCE if e["level"] == "E1"), 10)
+        # 一手来源至少 14 条（v1.2 再补入 4 条一手公文），否则报告的证据强度不足
+        self.assertGreaterEqual(sum(1 for e in R.EVIDENCE if e["level"] == "E1"), 14)
 
     def test_beyond_rows_have_primary_source(self):
         """第 12 节的每一条赛道判定都必须有一手依据，不许拿媒体稿定禁区。"""
@@ -61,6 +61,48 @@ class TestData(unittest.TestCase):
             self.assertTrue(any("没有 E1 级依据" in e for e in R.verify_data()))
         finally:
             R.DATA["beyond"][2]["ev"] = saved
+
+    def test_missing_rows_have_primary_source(self):
+        """第 13 节每个领域的判定都要有一手依据，且必须写明校内已有什么。"""
+        lvl = {e["id"]: e["level"] for e in R.EVIDENCE}
+        for m in R.DATA["missing"]:
+            refs = [x.strip() for x in m["ev"].split("/") if x.strip()]
+            self.assertTrue(refs, m["name"])
+            self.assertTrue(any(lvl[r] == "E1" for r in refs), m["name"])
+            # 不写「学校已有什么」，结论就会退化成「学校没教」
+            self.assertTrue(m["supply"], m["name"])
+
+    def test_missing_verdicts(self):
+        by = {m["name"]: m for m in R.DATA["missing"]}
+        # 财商是本节核心：只能做工具，且必须承认校内已有
+        self.assertEqual(by["财商 / 理财启蒙"]["pill"], "solo")
+        self.assertIn("道德与法治", by["财商 / 理财启蒙"]["supply"])
+        # 心理与性教育碰专业资质 / 敏感内容，必须判死
+        self.assertEqual(by["心理健康 / 情绪管理"]["pill"], "off")
+        self.assertEqual(by["青春期 / 性教育"]["pill"], "off")
+        # 劳动与职业有课时指标，付费方是学校
+        self.assertEqual(by["劳动 / 生活技能"]["pill"], "b2b")
+        self.assertEqual(by["职业启蒙 / 生涯规划"]["pill"], "b2b")
+        # 六个领域全部没有计分：这是「不能当第二曲线」的根因，不许被改掉
+        for m in R.DATA["missing"]:
+            self.assertIn("无计分", m["hard"] + m["why"], m["name"])
+
+    def test_break_verify_on_missing_without_e1(self):
+        saved = R.DATA["missing"][0]["ev"]
+        try:
+            R.DATA["missing"][0]["ev"] = "E19"  # 只剩媒体转述
+            self.assertTrue(any("没有 E1 级依据" in e for e in R.verify_data()))
+        finally:
+            R.DATA["missing"][0]["ev"] = saved
+
+    def test_break_verify_on_caishang_without_supply(self):
+        """把「学校没教」写回去，自检必须报错。"""
+        saved = R.DATA["missing"][0]["supply"]
+        try:
+            R.DATA["missing"][0]["supply"] = "学校没教，家长只能外面补"
+            self.assertTrue(any("道德与法治" in e for e in R.verify_data()))
+        finally:
+            R.DATA["missing"][0]["supply"] = saved
 
     def test_weights_sum_to_one(self):
         self.assertAlmostEqual(sum(w["w"] for w in R.DATA["weights"]), 1.0, places=9)
@@ -136,12 +178,21 @@ class TestHtml(unittest.TestCase):
     def test_key_figures_present(self):
         # 关键结论必须落在页面上，防止模板改动后数字悄悄丢失
         for s in ("1.2 亿", "340%", "30.9%", "1434.4", "各 10 分", "2025-09-01",
-                  "15.6 亿", "91%", "47 项", "学科类", "87.6 亿元"):
+                  "15.6 亿", "91%", "47 项", "学科类", "87.6 亿元",
+                  # 第 13 节：财商已在课标、心理每校至少 1 名、综合实践有课时
+                  "5720", "财经与生活", "每校至少", "316 号", "每周不少于 2 课时"):
             self.assertIn(s, self.html)
 
     def test_section_12_present(self):
         self.assertIn('id="s12"', self.html)
         self.assertIn("兴趣类赛道的判定", self.html)
+
+    def test_section_13_present(self):
+        self.assertIn('id="s13"', self.html)
+        self.assertIn("学校没教", self.html)
+        # 「财商」这个前提必须被正文更正，而不是只在数据里
+        self.assertIn("道德与法治 4 年级", self.html)
+        self.assertIn("设计禁区", self.html)
 
     def test_toc_anchors_resolve(self):
         toc = self.html.split('<nav class="toc">', 1)[1].split("</nav>", 1)[0]

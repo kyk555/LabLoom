@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>K12 实验内容工具：可行性调研与定位建议｜v1.1</title>
+<title>K12 实验内容工具：可行性调研与定位建议｜v1.2</title>
 <meta name="description" content="K12 实验内容工具的可行性调研与定位建议：政策、竞争、技术、商业、合规五维取证，给出「有条件推进」的结论与 4 周验证计划。">
 <meta name="author" content="LabLoom 项目组">
 <meta name="color-scheme" content="light">
@@ -101,6 +101,8 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
 .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600}
 .pill.go{background:#e6f6ec;color:var(--ok)} .pill.no{background:#fdecec;color:var(--bad)}
 .pill.mid{background:#fdf5e3;color:var(--warn)}
+.pill.off{background:#fdecec;color:var(--bad)} .pill.solo{background:#fdf5e3;color:var(--warn)}
+.pill.b2b{background:#e6f6ec;color:var(--ok)}
 </style>
 </head>
 <body>
@@ -111,9 +113,9 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
     <h1>K12 实验内容工具：可行性调研与定位建议</h1>
     <p class="sub">面向「Vibe Coding 生成实验内容 + 家长个性化教学」这一设想的投资前期评估</p>
     <div class="meta">
-      <div>版本 <b>v1.1</b></div>
+      <div>版本 <b>v1.2</b></div>
       <div>作者 <b>LabLoom 项目组</b></div>
-      <div>取证截止 <b>2026-10-20 05:25（UTC+8）</b></div>
+      <div>取证截止 <b>2026-10-20 05:45（UTC+8）</b></div>
       <div><b>内部决策用 · 不构成对外投资建议</b></div>
     </div>
     <div class="verdict">
@@ -139,6 +141,7 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
 <li><a href="#s10">风险与对冲</a></li>
 <li><a href="#s11">结论与给决策者的三句话</a></li>
 <li><a href="#s12">范围外：兴趣类赛道的判定</a></li>
+<li><a href="#s13">学校没教？财商与其他候选领域</a></li>
 <li><a href="#sA">附录 A 证据台账</a></li>
 <li><a href="#sB">附录 B 数据缺口与方法局限</a></li></ol></nav>
 
@@ -191,8 +194,8 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
 <h3>1.1 做了什么</h3>
 <ul>
 <li><b>检索</b>：联网检索多轮，覆盖政策与监管口径、地方考试方案、公共文化场馆数据、竞品功能、行业经营数据五类。</li>
-<li><b>取样</b>：初筛各轮检索结果，人工剔除 SEO 文档站（豆丁、人人文库、360 文库等）与短视频聚合页，保留 19 条进入证据台账。</li>
-<li><b>核验</b>：对 13 条来源抓取正文并留存 <code>URL + 抓取时间 + 正文 sha256</code>；另有 6 条仅有检索摘要（JS 渲染、跳转下载或原文不可得），已在台账明确标注。</li>
+<li><b>取样</b>：初筛各轮检索结果，人工剔除 SEO 文档站（豆丁、人人文库、360 文库等）与短视频聚合页，保留 24 条进入证据台账。</li>
+<li><b>核验</b>：对 18 条来源抓取正文并留存 <code>URL + 抓取时间 + 正文 sha256</code>；另有 6 条仅有检索摘要（JS 渲染、跳转下载或原文不可得），已在台账明确标注。</li>
 </ul>
 
 <h3>1.2 证据分级与使用规则</h3>
@@ -820,8 +823,118 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
 </div>
 
 
+<h2 id="s13"><span class="num">13</span>学校没教？—— 财商与其他「家长愿意补」领域的筛查</h2>
+
+<p class="lead">「财商、心理、性教育、学习方法——学校都不考，家长都愿意补」，这句话的前半段是错的，后半段是对的。
+逐个查完一手文件后，这六个领域<b>没有一个是「学校没教」</b>：财商在道德与法治和高中数学里，心理有专门纲要和每校至少一名教师，
+劳动是独立国家课程，职业体验是综合实践必修内容。真正缺的是<b>课时里的练习、可复用的活动包、能被记录的反馈</b>。</p>
+
+<p>结论先放：这六个领域<b>没有一个能撑起第二增长曲线</b>——它们全部没有计分或评级（12.1 的判据），
+我们唯一的能力（内容正确性）在这里不被购买。逐个判下来：2 个不做、2 个只做工具与练习、2 个可做但付费方是机构。</p>
+
+<h3>13.1 「学校没教」这个前提，一半是错的</h3>
+
+<p>家长最常说的「学校不教这些」，在财商上尤其不成立：</p>
+<ul>
+<li><b>财商</b>：教育部答复明确——道德与法治 4 年级「引导学生学会合理消费，有储蓄可以进行投资理财」，
+8 年级「引导学生学会分辨金融诈骗行为」；高中数学讲复利模型与等额本金模型；高中思政选修「财经与生活」含「投资与理财」。
+上海、广州、浙江、四川还有地方课程与读本 <a class="tag" href="#ev-E20" title="教育部对十三届全国人大二次会议第 5720 号建议的答复（金融知识普及教育纳入国民教育体系）">E20</a></li>
+<li><b>心理</b>：专门纲要已列情绪调适、人际交往、升学择业，并要求「每所学校至少配备一名专职或兼职心理健康教育教师」，
+课时安排在地方课程或学校课程中 <a class="tag" href="#ev-E21" title="教育部《中小学心理健康教育指导纲要（2012 年修订）》">E21</a></li>
+<li><b>劳动 / 生活技能</b>：2022 年版课程方案把劳动单列为一门课程标准，2022 年秋季学期起执行 <a class="tag" href="#ev-E22" title="教育部关于印发义务教育课程方案和课程标准（2022 年版）的通知">E22</a></li>
+<li><b>职业启蒙</b>：综合实践活动是必修课，含「职业体验」，指向「初步的生涯规划意识和能力」，
+还要求建立档案袋并纳入学生综合素质档案 <a class="tag" href="#ev-E24" title="教育部《中小学综合实践活动课程指导纲要》（教材〔2017〕4 号）">E24</a></li>
+</ul>
+
+<div class="callout warn">
+<b>所以缺的不是「内容」，是「练过」。</b>课标要求的是「了解 / 体验」，落到课堂常常是一节课讲完、没有可操作的练习、
+没有可核查的反馈。能卖的是这一段，不是「学校没教的知识」——后者会被老师一句话否掉。
+</div>
+
+<h3>13.2 判据从一条加到三条</h3>
+
+<p>12.1 那条判据（有没有计分或评级）仍然有效，但面对「学校已有一门课」的领域，还要先过两道前置筛：</p>
+<ol>
+<li><b>学校是否已有课标或专门文件？</b>已有 → 不能卖「补空白」，只能卖「落地」；把「缺失」当卖点，等于把老师当外行。</li>
+<li><b>是否有计分或评级？</b>没有 → 正确性没有溢价（与 12.1 同）。</li>
+<li><b>是否有专门的监管红线？</b>有 → 交付形态被限死（金融营销、心理测评、未成年人敏感内容）。</li>
+</ol>
+<p class="small">三条是叠加关系，不是择一：全过才值得做；缺任何一条，就只能做工具或走 B 端。</p>
+
+<h3>13.3 六个领域的筛查结果</h3>
+
+<div class="tbl-scroll">
+<table>
+<caption>表 13-1　「家长愿意补」的六个领域：校内供给、硬约束、动机与红线</caption>
+<thead><tr><th>领域</th><th>学校已有什么</th><th>硬约束</th><th>家长付费动机</th><th>专门红线</th><th>判定 / 依据</th></tr></thead>
+<tbody><tr><td><b>财商 / 理财启蒙</b></td><td class='small'>道德与法治 4 年级「合理消费」、8 年级「分辨金融诈骗」；高中数学讲复利与等额本金模型；高中思政选修「财经与生活」</td><td class='small'>无计分、无等级</td><td class='small'>强：乱花钱、压岁钱、游戏充值、校园贷</td><td class='small'>金融营销资质与「保本 / 收益」表述</td><td><span class='pill solo'>只做工具 + 练习，不做课程</span><br><a class="tag" href="#ev-E20" title="教育部对十三届全国人大二次会议第 5720 号建议的答复（金融知识普及教育纳入国民教育体系）">E20</a> <a class="tag" href="#ev-E23" title="人民银行、银保监会、证监会、外汇局《关于进一步规范金融营销宣传行为的通知》（银发〔2019〕316 号）">E23</a></td></tr>
+<tr><td><b>心理健康 / 情绪管理</b></td><td class='small'>纲要已列情绪调适、人际交往、升学择业；每校至少 1 名专（兼）职教师；课时可安排在地方或学校课程</td><td class='small'>无计分</td><td class='small'>强：亲子冲突、考试焦虑</td><td class='small'>极高：测评、咨询属专业行为；纲要要求防医学化、不得强迫测评、严格保密</td><td><span class='pill off'>不做</span><br><a class="tag" href="#ev-E21" title="教育部《中小学心理健康教育指导纲要（2012 年修订）》">E21</a></td></tr>
+<tr><td><b>劳动 / 生活技能</b></td><td class='small'>单列《义务教育劳动课程标准（2022 年版）》，2022 年秋季学期起执行</td><td class='small'>无学业考试（有课程、无计分）</td><td class='small'>中：会做饭、会整理、能自理</td><td class='small'>中：明火、刀具、化学品须命中安全模板</td><td><span class='pill b2b'>B 端课时包可做</span><br><a class="tag" href="#ev-E22" title="教育部关于印发义务教育课程方案和课程标准（2022 年版）的通知">E22</a></td></tr>
+<tr><td><b>职业启蒙 / 生涯规划</b></td><td class='small'>综合实践必修课含「职业体验」，指向初步生涯规划；纲要初中段含职业规划意识</td><td class='small'>无计分（综合素质档案为定性记录）</td><td class='small'>中：新高考选科、专业认知</td><td class='small'>低</td><td><span class='pill b2b'>B 端可做，C 端弱</span><br><a class="tag" href="#ev-E24" title="教育部《中小学综合实践活动课程指导纲要》（教材〔2017〕4 号）">E24</a> <a class="tag" href="#ev-E21" title="教育部《中小学心理健康教育指导纲要（2012 年修订）》">E21</a></td></tr>
+<tr><td><b>青春期 / 性教育</b></td><td class='small'>纲要小学高年级要求「开展初步的青春期教育」</td><td class='small'>无计分</td><td class='small'>强，但敏感、不便公开付费</td><td class='small'>最高：未成年人与敏感内容审核</td><td><span class='pill off'>不做</span><br><a class="tag" href="#ev-E21" title="教育部《中小学心理健康教育指导纲要（2012 年修订）》">E21</a></td></tr>
+<tr><td><b>学习方法 / 时间管理</b></td><td class='small'>纲要总目标含「学会学习」，小学中年级要求「增强时间管理意识」</td><td class='small'>无计分</td><td class='small'>极强：作业磨蹭、不会复习</td><td class='small'>低，但极易滑向「提分」承诺</td><td><span class='pill solo'>工具属性，不是内容生意</span><br><a class="tag" href="#ev-E21" title="教育部《中小学心理健康教育指导纲要（2012 年修订）》">E21</a></td></tr></tbody>
+</table>
+</div>
+<p class="chart-note">图例：<span class="pill off">不做</span> 越界或换不到钱；<span class="pill solo">只做工具</span> 可做内容与练习，不做课程；
+<span class="pill b2b">B 端可做</span> 付费方是学校 / 场馆 / 机构，不是家长。</p>
+
+<h3>13.4 逐行理由</h3>
+<ul><li><b>财商 / 理财启蒙</b>：校内已有内容，「学校没教」这句站不住；无计分，正确性不被购买；一旦出现收益排行、具体产品名或「带你买」，就从教育滑向金融营销。</li>
+<li><b>心理健康 / 情绪管理</b>：做「知识」没问题，但凡涉及评估、筛查、咨询就一步越界；越界成本远高于内容收入。</li>
+<li><b>劳动 / 生活技能</b>：学校有课时、有督导，缺的是能直接上的活动包与留痕材料；付费方是学校，不是家长。</li>
+<li><b>职业启蒙 / 生涯规划</b>：有课时与档案袋载体，但家长不会为此单独付费；学校、场馆才是采购方。</li>
+<li><b>青春期 / 性教育</b>：政策有要求、家长有需求，但内容审核与家校沟通成本不是我们能承担的；专门文件原文本次未取，标注待核实。</li>
+<li><b>学习方法 / 时间管理</b>：家长买的是工具与陪伴，不是可核验的知识内容；我们唯一的能力（正确性）在这里换不到钱。</li></ul>
+
+<h3>13.5 财商：看起来最像机会，实际最窄</h3>
+
+<p>单拎它出来，是因为它的痛点最真（乱花钱、压岁钱、游戏充值）、家长最愿意聊、内容也最适合做成可交互的东西。
+但它是本节里最窄的一条，卡在三处：</p>
+<ol>
+<li><b>校内已有</b>：道法 4 年级讲合理消费与投资理财、8 年级讲金融诈骗识别，高中数学讲复利与等额本金 <a class="tag" href="#ev-E20" title="教育部对十三届全国人大二次会议第 5720 号建议的答复（金融知识普及教育纳入国民教育体系）">E20</a>。
+你做的「零花钱课」，很可能与道法课重复。</li>
+<li><b>没有计分</b>：家长不会核对收益率算得对不对，只关心孩子愿不愿意继续——这正是 12.1 说的「正确性不被购买」。</li>
+<li><b>合规边界比一般教育内容更硬</b>：<a class="tag" href="#ev-E23" title="人民银行、银保监会、证监会、外汇局《关于进一步规范金融营销宣传行为的通知》（银发〔2019〕316 号）">E23</a> 两条——
+「<b>未取得相应金融业务资质的市场经营主体，不得开展与该金融业务相关的营销宣传活动</b>」；
+「<b>不得对资产管理产品未来效果、收益或相关情况作出保证性承诺，明示或暗示保本、无风险或保收益</b>」。</li>
+</ol>
+
+<div class="callout bad">
+<b>设计禁区（硬约束，写进内容规则）：</b>收益率排行、模拟盘收益榜、具体金融产品名、
+「带你买 / 带你投」类引导、任何「保本 / 稳赚」表述。出现其中任何一条，产品就从「教育内容」滑向「金融营销」，
+落进上面第一条的射程。这条不需要讨论，直接禁用。
+</div>
+
+<p><b>可以做的</b>（且都能复用校验层，不碰钱）：零花钱记账与预算、延迟满足练习、利息与复利的数学推演（对齐高中课标）、
+金融骗局识别（对齐 8 年级）。这些交付的是「练习 + 正确性」，不是「课程 + 收益」。</p>
+
+<p class="small"><b>边界说明：</b>「财商」既不在教监管厅函〔2021〕3 号的学科类 9 科里，也不在非学科类（体育、艺术、综合实践）清单里。
+本次未找到明确归类口径，需向属地教育部门确认；本文不据此推断「可办」或「不可办」（见附录 B）。</p>
+
+<h3>13.6 真正可做的那一个：学校有课时，没有活动包</h3>
+
+<p>把视角从「家长缺什么」换到「学校有什么指标要完成」，答案立刻出现 <a class="tag" href="#ev-E24" title="教育部《中小学综合实践活动课程指导纲要》（教材〔2017〕4 号）">E24</a>：</p>
+<ul>
+<li>综合实践活动是<b>必修课</b>，小学一年级至高中三年级全面实施；</li>
+<li>课时是硬指标：小学 1—2 年级<b>平均每周不少于 1 课时</b>，小学 3—6 年级和初中<b>平均每周不少于 2 课时</b>；</li>
+<li><b>原则上每所学校至少配备 1 名专任教师</b>；</li>
+<li>要建档案袋、纳入综合素质档案，且是招生录取综合评价的参考。</li>
+</ul>
+
+<p>学校手里有<b>课时指标、专任教师、留痕要求</b>，缺的是能直接上的活动包与记录模板——这正是「内容 + 工具」能交付的东西。
+本条与 12.6 是同一结论的两个证据面：12.6 从监管侧推出「换场景不换学科」，本节从供给缺口推出「换付费方不换内容」。</p>
+
+<div class="callout ok">
+<b>一句话：</b>面向家长和小孩，「学校没教」不是空白，是误判。能卖的不是「补缺失」，是「替学校把课时填满、把过程留痕」；
+C 端只做 9.9—49 元档的低价工具（回本测算见第 5 节），当获客与验证，不当收入支柱。
+</div>
+
+<p class="small">与 12.5 的形态纪律一致：工具 + 内容，不卖课时包、不承诺提分、B 端优先。
+没拿到的三样东西（未成年人金融营销条款原文、性教育专门文件、财商培训的监管归类）已列入附录 B，不在这里补估计值。</p>
+
+
 <h2 id="sA"><span class="num">A</span>附录 A　证据台账</h2>
-<p>共 19 条。sha256 为<b>正文前 16 位</b>，用于校验抓取内容未被改写；标注「仅检索摘要」的条目未取正文，因此无 sha256。
+<p>共 24 条。sha256 为<b>正文前 16 位</b>，用于校验抓取内容未被改写；标注「仅检索摘要」的条目未取正文，因此无 sha256。
 链接可能随站点改版失效，以抓取时间与 sha256 为准。</p>
 <div class="tbl-scroll">
 <table>
@@ -960,11 +1073,46 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
   <td class="small">中国象棋协会公布第一批全国象棋特色学校会员名单，共 109 所。为媒体转述，需以协会原文件复核；即使属实，也说明象棋的校内 B 端口子极小。</td>
   <td class="small"><a href="https://finance.sina.com.cn/roll/2019-05-06/doc-ihvhiqax6834852.shtml" rel="noopener noreferrer nofollow" target="_blank">https://finance.sina.com.cn/roll/2019-05-06/doc-ihvhiqax6834852.shtml</a></td>
   <td class="small">仅检索摘要，未取正文<br>sha256 <span class="small">—</span></td>
+</tr>
+<tr id="ev-E20">
+  <td><span class="badge b-E1">E1</span><br><b>E20</b></td>
+  <td><b>教育部对十三届全国人大二次会议第 5720 号建议的答复（金融知识普及教育纳入国民教育体系）</b><br><span class="small">中华人民共和国教育部　2019-09-03</span></td>
+  <td class="small">「4 年级引导学生学会合理消费，有储蓄可以进行投资理财，8 年级引导学生学会分辨金融诈骗行为」；高中数学讲复利模型与等额本金模型；高中思政选修「财经与生活」含货币与市场、收入与支出、投资与理财。另有上海、广州、浙江、四川把金融教育纳入地方课程或读本。</td>
+  <td class="small"><a href="http://www.moe.gov.cn/jyb_xxgk/xxgk_jyta/jyta_jiaocaiju/201909/t20190903_397212.html" rel="noopener noreferrer nofollow" target="_blank">http://www.moe.gov.cn/jyb_xxgk/xxgk_jyta/jyta_jiaocaiju/201909/t20190903_397212.html</a></td>
+  <td class="small">2026-10-20 05:42:19<br>sha256 <code>77efef88e3de0989</code></td>
+</tr>
+<tr id="ev-E21">
+  <td><span class="badge b-E1">E1</span><br><b>E21</b></td>
+  <td><b>教育部《中小学心理健康教育指导纲要（2012 年修订）》</b><br><span class="small">中华人民共和国教育部　2012-12-11</span></td>
+  <td class="small">内容重点是认识自我、学会学习、人际交往、情绪调适、升学择业；小学高年级「开展初步的青春期教育」、小学中年级「增强时间管理意识」；「每所学校至少配备一名专职或兼职心理健康教育教师」，课时在地方课程或学校课程中安排；第 9 条要求「防止心理健康教育医学化」「不能强迫学生接受心理测试」并遵循保密原则。</td>
+  <td class="small"><a href="http://www.moe.gov.cn/srcsite/A06/s3325/201212/t20121211_145679.html" rel="noopener noreferrer nofollow" target="_blank">http://www.moe.gov.cn/srcsite/A06/s3325/201212/t20121211_145679.html</a></td>
+  <td class="small">2026-10-20 05:42:24<br>sha256 <code>3b4e08668985c819</code></td>
+</tr>
+<tr id="ev-E22">
+  <td><span class="badge b-E1">E1</span><br><b>E22</b></td>
+  <td><b>教育部关于印发义务教育课程方案和课程标准（2022 年版）的通知</b><br><span class="small">中华人民共和国教育部　2022-04-20</span></td>
+  <td class="small">17 个课程标准中单列《义务教育劳动课程标准（2022 年版）》，2022 年秋季学期起执行。劳动/生活技能是国家课程，不是「学校没教」。</td>
+  <td class="small"><a href="http://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html" rel="noopener noreferrer nofollow" target="_blank">http://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html</a></td>
+  <td class="small">2026-10-20 05:42:27<br>sha256 <code>55e30089f0085c5e</code></td>
+</tr>
+<tr id="ev-E23">
+  <td><span class="badge b-E2">E2</span><br><b>E23</b></td>
+  <td><b>人民银行、银保监会、证监会、外汇局《关于进一步规范金融营销宣传行为的通知》（银发〔2019〕316 号）</b><br><span class="small">北京金融法院（转载全文；央行原页正文为 PDF 附件，未取到条款正文）　2019-12-25</span></td>
+  <td class="small">「未取得相应金融业务资质的市场经营主体，不得开展与该金融业务相关的营销宣传活动」；「不得对资产管理产品未来效果、收益或相关情况作出保证性承诺，明示或暗示保本、无风险或保收益」。<b>经核全文无「未成年人」专条</b>，不得据此声称「禁止向未成年人营销」。</td>
+  <td class="small"><a href="https://bjfc.bjcourt.gov.cn/cac/1615538304806.html" rel="noopener noreferrer nofollow" target="_blank">https://bjfc.bjcourt.gov.cn/cac/1615538304806.html</a></td>
+  <td class="small">2026-10-20 05:42:53<br>sha256 <code>ddebd0313e408402</code></td>
+</tr>
+<tr id="ev-E24">
+  <td><span class="badge b-E1">E1</span><br><b>E24</b></td>
+  <td><b>教育部《中小学综合实践活动课程指导纲要》（教材〔2017〕4 号）</b><br><span class="small">中华人民共和国教育部　2017-10-17</span></td>
+  <td class="small">综合实践活动为国家课程方案规定的必修课，小学一年级至高中三年级全面实施；课时「小学 1—2 年级，平均每周不少于 1 课时；小学 3—6 年级和初中，平均每周不少于 2 课时」；「原则上每所学校至少配备 1 名专任教师」；职业体验指向「初步的生涯规划意识和能力」；建立档案袋并「纳入学生综合素质档案」，「也是招生录取中综合评价的重要参考」。</td>
+  <td class="small"><a href="http://www.moe.gov.cn/srcsite/A26/s8001/201710/t20171017_316616.html" rel="noopener noreferrer nofollow" target="_blank">http://www.moe.gov.cn/srcsite/A26/s8001/201710/t20171017_316616.html</a></td>
+  <td class="small">2026-10-20 05:43:10<br>sha256 <code>1de88e3f928893dc</code></td>
 </tr></tbody>
 </table>
 </div>
-<p class="small">证据等级分布：E1 × 10、
-E2 × 1、
+<p class="small">证据等级分布：E1 × 14、
+E2 × 2、
 E3 × 6、
 E4 × 2。</p>
 
@@ -981,7 +1129,10 @@ E4 × 2。</p>
 <tr><td>AI 教育产品的付费转化率 / 留存曲线</td><td><b>未获取</b></td><td class='small'>无公开披露；因此本报告不做 LTV / CAC 测算，只做付费意愿的前置验证。</td></tr>
 <tr><td>各地实验操作考试评分标准全文</td><td><b>部分获取</b></td><td class='small'>仅取得铜陵一地的一手方案；河南等地为媒体转述，需逐地取原文件。</td></tr>
 <tr><td>棋类 / 兴趣类培训市场规模</td><td><b>未获取</b></td><td class='small'>两份豆丁报告就「2025 年围棋培训规模」分别给出 87.6 亿元与约 400 亿元，相差 4.5 倍且无原始抽样，不予采信。</td></tr>
-<tr><td>成人兴趣内容的付费率 / ARPPU</td><td><b>未获取</b></td><td class='small'>无公开披露；因此本文不对「成人兴趣入门」做任何 TAM / LTV 测算。</td></tr></tbody>
+<tr><td>成人兴趣内容的付费率 / ARPPU</td><td><b>未获取</b></td><td class='small'>无公开披露；因此本文不对「成人兴趣入门」做任何 TAM / LTV 测算。</td></tr>
+<tr><td>针对未成年人的金融营销专门限制（条款原文）</td><td><b>未获取</b></td><td class='small'>银发〔2019〕316 号全文无「未成年人」专条；《未成年人保护法》《广告法》相关条款本次未取原文，故第 13 节不作条款引用，只写「待核实」。</td></tr>
+<tr><td>「财商 / 金融素养」校外培训的监管归类</td><td><b>未获取</b></td><td class='small'>教监管厅函〔2021〕3 号的学科类 9 科与非学科类（体育、艺术、综合实践）两份清单均未列「财商」；未见明确归类口径，需向属地教育部门确认，本文不推断可办或不可办。</td></tr>
+<tr><td>性教育专门文件的原文</td><td><b>未获取</b></td><td class='small'>仅从《中小学心理健康教育指导纲要（2012 年修订）》确认「小学高年级开展初步的青春期教育」；专门文件本次未取到，故第 13 节只按纲要表述。</td></tr></tbody>
 </table>
 </div>
 
@@ -1000,7 +1151,8 @@ E4 × 2。</p>
 <thead><tr><th>版本</th><th>日期</th><th>变更</th></tr></thead>
 <tbody>
 <tr><td>v1.0</td><td>2026-10-20</td><td>首版：完成政策、竞争、技术、商业、合规五个维度的取证与定位建议</td></tr>
-<tr><td><b>v1.1</b></td><td><b>2026-10-20</b></td><td><b>新增第 12 节「范围外：兴趣类赛道的判定」，补 6 条证据（E14—E19，其中 5 条一手），新增 2 条数据缺口；同时对 B 方案补交付形态纪律</b></td></tr>
+<tr><td>v1.1</td><td>2026-10-20</td><td>新增第 12 节「范围外：兴趣类赛道的判定」，补 6 条证据（E14—E19，其中 5 条一手），新增 2 条数据缺口；同时对 B 方案补交付形态纪律</td></tr>
+<tr><td><b>v1.2</b></td><td><b>2026-10-20</b></td><td><b>新增第 13 节「学校没教？—— 财商与其他候选领域的筛查」，补 5 条证据（E20—E24，其中 4 条一手），新增 3 条数据缺口；把「学校没教」这一错误前提写入正文更正，并给出财商内容的设计禁区</b></td></tr>
 </tbody>
 </table>
 </div>
@@ -1011,7 +1163,7 @@ E4 × 2。</p>
 
 
 <footer>
-  <p><b>K12 实验内容工具：可行性调研与定位建议</b> · LabLoom 项目组 · 版本 v1.1 · 取证截止 2026-10-20 05:25（UTC+8）</p>
+  <p><b>K12 实验内容工具：可行性调研与定位建议</b> · LabLoom 项目组 · 版本 v1.2 · 取证截止 2026-10-20 05:45（UTC+8）</p>
   <p>本页由 <code>工具/生成调研报告.py</code> 从 <code>EVIDENCE</code> / <code>DATA</code> 常量生成，请勿手改。
   数字口径与证据等级见附录 A、B。图表库同目录 <code>assets/echarts.min.js</code>，不依赖外网 CDN。</p>
   <p>内部决策用 · 不构成对外投资建议。文中「本文判断」为推论，可能被证伪；对外引用请以原始来源为准。</p>
