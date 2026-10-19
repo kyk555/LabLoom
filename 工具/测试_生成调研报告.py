@@ -104,6 +104,57 @@ class TestData(unittest.TestCase):
         finally:
             R.DATA["missing"][0]["supply"] = saved
 
+    def test_toc_rows_have_primary_source(self):
+        """第 14 节每个 To C 机会点都要有一手依据，且必须写「什么信号就停」。"""
+        lvl = {e["id"]: e["level"] for e in R.EVIDENCE}
+        for t in R.DATA["toc"]:
+            refs = [x.strip() for x in t["ev"].split("/") if x.strip()]
+            self.assertTrue(refs, t["name"])
+            self.assertTrue(any(lvl[r] == "E1" for r in refs), t["name"])
+            # 没有停手条件的「机会」不叫机会
+            self.assertTrue(t["stop"], t["name"])
+            self.assertTrue(t["mvp"], t["name"])
+
+    def test_toc_verdicts(self):
+        by = {t["name"]: t for t in R.DATA["toc"]}
+        # 现在就能试的两个：实验单点卡、场馆任务卡
+        self.assertEqual(by["实验操作「单点」考前卡"]["pill"], "go")
+        self.assertEqual(by["场馆 / 研学亲子任务卡"]["pill"], "go")
+        # 家庭实验包受「小学科学归类不明」限制，只能做亲子活动
+        self.assertEqual(by["家庭可做的安全实验包"]["pill"], "mid")
+        # 三个看着像机会的坑必须一直判死
+        self.assertEqual(by["拍照搜题 / 答案直出"]["pill"], "no")
+        self.assertEqual(by["卖学科课时包 / 押题班"]["pill"], "no")
+        self.assertEqual(by["AI 心理测评 / 情绪筛查"]["pill"], "no")
+        # 判死的行必须写明理由前缀，避免以后被悄悄改成「可做」
+        for t in R.DATA["toc"]:
+            if t["pill"] == "no":
+                self.assertIn("别碰", t["verdict"], t["name"])
+
+    def test_break_verify_on_toc_without_e1(self):
+        saved = R.DATA["toc"][0]["ev"]
+        try:
+            R.DATA["toc"][0]["ev"] = "E19"  # 只剩媒体转述
+            self.assertTrue(any("没有 E1 级依据" in e for e in R.verify_data()))
+        finally:
+            R.DATA["toc"][0]["ev"] = saved
+
+    def test_break_verify_on_toc_promise_word(self):
+        """把「提分」写进最小可交付物，自检必须报错（承诺性表述是红线）。"""
+        saved = R.DATA["toc"][0]["mvp"]
+        try:
+            R.DATA["toc"][0]["mvp"] = "一个实验一张提分清单"
+            self.assertTrue(any("承诺性表述" in e for e in R.verify_data()))
+        finally:
+            R.DATA["toc"][0]["mvp"] = saved
+
+    def test_toc_stop_may_contain_banned_words(self):
+        """stop 字段写的就是禁止内容，允许出现禁语；其余字段出现才算违规。"""
+        hit = [t["name"] for t in R.DATA["toc"]
+               if any(w in t["stop"] for w in ("提分", "包过", "押题"))]
+        self.assertTrue(hit, "至少要有一行在 stop 里写清禁止词，否则等于没设边界")
+        self.assertEqual([e for e in R.verify_data() if "承诺性表述" in e], [])
+
     def test_weights_sum_to_one(self):
         self.assertAlmostEqual(sum(w["w"] for w in R.DATA["weights"]), 1.0, places=9)
 
@@ -193,6 +244,13 @@ class TestHtml(unittest.TestCase):
         # 「财商」这个前提必须被正文更正，而不是只在数据里
         self.assertIn("道德与法治 4 年级", self.html)
         self.assertIn("设计禁区", self.html)
+
+    def test_section_14_present(self):
+        self.assertIn('id="s14"', self.html)
+        self.assertIn("表 14-1", self.html)
+        # To C 的三条铁律与「停手信号」必须在正文，而不是只在数据里
+        self.assertIn("不卖课时", self.html)
+        self.assertIn("停手信号", self.html)
 
     def test_toc_anchors_resolve(self):
         toc = self.html.split('<nav class="toc">', 1)[1].split("</nav>", 1)[0]
