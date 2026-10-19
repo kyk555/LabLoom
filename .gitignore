@@ -1,0 +1,47 @@
+# 依赖
+node_modules/
+.pnpm-store/
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+.python-version
+
+# 构建产物
+dist/
+build/
+out/
+.next/
+.cache/
+*.tsbuildinfo
+
+# 环境与密钥（绝不能提交）
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# 日志与临时文件
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+tmp/
+temp/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# 数据与导出（原始抓取留档放本地，不入库）
+data/raw/
+*.sqlite
+*.db
