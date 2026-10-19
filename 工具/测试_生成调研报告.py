@@ -33,8 +33,34 @@ class TestData(unittest.TestCase):
         for e in R.EVIDENCE:
             self.assertTrue(e["url"].startswith("http"))
             self.assertIn(e["level"], ("E1", "E2", "E3", "E4"))
-        # 一手来源至少 5 条，否则报告的证据强度不足
-        self.assertGreaterEqual(sum(1 for e in R.EVIDENCE if e["level"] == "E1"), 5)
+        # 一手来源至少 10 条（v1.1 补入 5 条一手公文），否则报告的证据强度不足
+        self.assertGreaterEqual(sum(1 for e in R.EVIDENCE if e["level"] == "E1"), 10)
+
+    def test_beyond_rows_have_primary_source(self):
+        """第 12 节的每一条赛道判定都必须有一手依据，不许拿媒体稿定禁区。"""
+        lvl = {e["id"]: e["level"] for e in R.EVIDENCE}
+        for b in R.DATA["beyond"]:
+            refs = [x.strip() for x in b["ev"].split("/") if x.strip()]
+            self.assertTrue(refs, b["name"])
+            self.assertTrue(any(lvl[r] == "E1" for r in refs), b["name"])
+
+    def test_beyond_verdicts_follow_policy(self):
+        by = {b["name"]: b for b in R.DATA["beyond"]}
+        self.assertEqual(by["历史"]["pill"], "no")
+        self.assertEqual(by["地理"]["pill"], "no")
+        self.assertEqual(by["象棋"]["pill"], "mid")
+        # 象棋必须写明「不挂钩升学」，否则会被误读成推荐
+        self.assertIn("不挂钩升学", by["象棋"]["hard"])
+        # 必须保留物化生自己的对照行，否则第 12 节会显得只批评别人
+        self.assertIn("物化生实验（本项目对照）", by)
+
+    def test_break_verify_on_beyond_without_e1(self):
+        saved = R.DATA["beyond"][2]["ev"]
+        try:
+            R.DATA["beyond"][2]["ev"] = "E19"  # 只剩媒体转述
+            self.assertTrue(any("没有 E1 级依据" in e for e in R.verify_data()))
+        finally:
+            R.DATA["beyond"][2]["ev"] = saved
 
     def test_weights_sum_to_one(self):
         self.assertAlmostEqual(sum(w["w"] for w in R.DATA["weights"]), 1.0, places=9)
@@ -109,8 +135,20 @@ class TestHtml(unittest.TestCase):
 
     def test_key_figures_present(self):
         # 关键结论必须落在页面上，防止模板改动后数字悄悄丢失
-        for s in ("1.2 亿", "340%", "30.9%", "1434.4", "各 10 分", "2025-09-01"):
+        for s in ("1.2 亿", "340%", "30.9%", "1434.4", "各 10 分", "2025-09-01",
+                  "15.6 亿", "91%", "47 项", "学科类", "87.6 亿元"):
             self.assertIn(s, self.html)
+
+    def test_section_12_present(self):
+        self.assertIn('id="s12"', self.html)
+        self.assertIn("兴趣类赛道的判定", self.html)
+
+    def test_toc_anchors_resolve(self):
+        toc = self.html.split('<nav class="toc">', 1)[1].split("</nav>", 1)[0]
+        anchors = re.findall(r'href="#([^"]+)"', toc)
+        self.assertGreaterEqual(len(anchors), 14)
+        for a in anchors:
+            self.assertIn('id="%s"' % a, self.html)
 
     def test_charts_registered(self):
         self.assertEqual(len(R.CHARTS), 4)

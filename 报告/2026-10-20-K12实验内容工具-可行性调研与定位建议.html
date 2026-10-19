@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>K12 实验内容工具：可行性调研与定位建议｜v1.0</title>
+<title>K12 实验内容工具：可行性调研与定位建议｜v1.1</title>
 <meta name="description" content="K12 实验内容工具的可行性调研与定位建议：政策、竞争、技术、商业、合规五维取证，给出「有条件推进」的结论与 4 周验证计划。">
 <meta name="author" content="LabLoom 项目组">
 <meta name="color-scheme" content="light">
@@ -111,9 +111,9 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
     <h1>K12 实验内容工具：可行性调研与定位建议</h1>
     <p class="sub">面向「Vibe Coding 生成实验内容 + 家长个性化教学」这一设想的投资前期评估</p>
     <div class="meta">
-      <div>版本 <b>v1.0</b></div>
+      <div>版本 <b>v1.1</b></div>
       <div>作者 <b>LabLoom 项目组</b></div>
-      <div>取证截止 <b>2026-10-20 05:00（UTC+8）</b></div>
+      <div>取证截止 <b>2026-10-20 05:25（UTC+8）</b></div>
       <div><b>内部决策用 · 不构成对外投资建议</b></div>
     </div>
     <div class="verdict">
@@ -138,6 +138,7 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
 <li><a href="#s9">验证计划：五个假设与 Kill 条件</a></li>
 <li><a href="#s10">风险与对冲</a></li>
 <li><a href="#s11">结论与给决策者的三句话</a></li>
+<li><a href="#s12">范围外：兴趣类赛道的判定</a></li>
 <li><a href="#sA">附录 A 证据台账</a></li>
 <li><a href="#sB">附录 B 数据缺口与方法局限</a></li></ol></nav>
 
@@ -189,9 +190,9 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
 
 <h3>1.1 做了什么</h3>
 <ul>
-<li><b>检索</b>：联网检索 14 轮，覆盖政策文件、地方考试方案、竞品功能实测、行业经营数据、市场规模五类。</li>
-<li><b>取样</b>：初筛 80 余条结果，人工剔除 SEO 文档站（豆丁、人人文库、360 文库等）与短视频聚合页，保留 13 条进入证据台账。</li>
-<li><b>核验</b>：对 8 条关键来源抓取正文并留存 <code>URL + 抓取时间 + 正文 sha256</code>；另有 3 条因 JS 渲染或跳转下载仅取到页面框架，已在台账明确标注「仅检索摘要」。</li>
+<li><b>检索</b>：联网检索多轮，覆盖政策与监管口径、地方考试方案、公共文化场馆数据、竞品功能、行业经营数据五类。</li>
+<li><b>取样</b>：初筛各轮检索结果，人工剔除 SEO 文档站（豆丁、人人文库、360 文库等）与短视频聚合页，保留 19 条进入证据台账。</li>
+<li><b>核验</b>：对 13 条来源抓取正文并留存 <code>URL + 抓取时间 + 正文 sha256</code>；另有 6 条仅有检索摘要（JS 渲染、跳转下载或原文不可得），已在台账明确标注。</li>
 </ul>
 
 <h3>1.2 证据分级与使用规则</h3>
@@ -210,7 +211,8 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
 
 <h3>1.3 为什么本报告不做 TAM / SAM / SOM 测算</h3>
 <div class="callout bad">
-<b>因为拿不到可信分母。</b>检索到的「家庭教育支出」「AI 教育付费率」内容全部来自 SEO 文档站，无抽样方法、无口径、无原始数据；教育智能硬件的千亿规模是<b>预测值</b>且与「内容层」不可换算。
+<b>因为拿不到可信分母。</b>检索到的「家庭教育支出」「AI 教育付费率」「棋类培训规模」内容全部来自 SEO 文档站或口径互相矛盾的报告，
+无抽样方法、无口径、无原始数据；教育智能硬件的千亿规模是<b>预测值</b>且与「内容层」不可换算。
 在这种基础上算 TAM，得到的是一位小数都不该信的假精确。本报告改用<b>付费意愿的前置验证</b>替代市场规模推算（见第 9 节）。
 </div>
 
@@ -702,8 +704,124 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
 </div>
 
 
+<h2 id="s12"><span class="num">12</span>范围外：兴趣类赛道的判定（象棋 / 历史 / 地理）</h2>
+
+<p class="lead">「既然实验能做，能不能扩到象棋、历史、地理这类以<b>兴趣培养入门</b>为目标的领域？」结论先放：
+这三个都不在 K12 之外，而是 K12 里另外两个格子——<b>一个是被「双减」封死的学科类，一个是被允许、但没人肯付钱且政策明确不许换成升学的非学科类</b>。
+本节给出判据与依据，避免下一轮再从头论证一遍。</p>
+
+<h3>12.1 一条判据：先问「有没有被计分或评级、且能换到实际利益」</h3>
+
+<div class="callout">
+<b>判据只有一句：这个领域有没有硬约束的计分或评级，而且这个评级能换到实际利益（录取、分班、资格）？</b><br>
+<b>有</b> → 我们的「评分点对齐 + 可验证留痕」有溢价，值得做（中考实验操作就是这一类）。<br>
+<b>没有</b> → 我们唯一的核心能力（内容正确性）<b>不被购买</b>。兴趣入门的家长买的是「孩子愿意继续学」，
+那是留存与陪伴的生意，正确性只是及格线，不是溢价点。
+</div>
+
+<p class="small">这也解释了为什么「换学科试试」不是一条路：换学科不改变「有没有人为此付钱」，
+只改变我们面对的是哪一条监管线。</p>
+
+<h3>12.2 三个领域的落格</h3>
+
+<div class="tbl-scroll">
+<table>
+<caption>表 12-1　范围外赛道的监管归类与判定（物化生实验作为对照列在最后一行）</caption>
+<thead><tr><th>领域</th><th>监管归类</th><th>硬约束（计分 / 评级）</th><th>免费替代强度</th><th>判定</th><th>依据</th></tr></thead>
+<tbody><tr><td><b>历史</b></td><td class='small'>学科类（教监管厅函〔2021〕3 号第一条）</td><td class='small'>中考、高考计分（最强）</td><td class='small'>博物馆免费开放率超 91%；2025 年官方教育活动 58.3 万场次</td><td><span class='pill no'>禁区：校外不得做</span></td><td class='small'><a class="tag" href="#ev-E14" title="教育部办公厅《关于进一步明确义务教育阶段校外培训学科类和非学科类范围的通知》教监管厅函〔2021〕3 号">E14</a> <a class="tag" href="#ev-E16" title="国家文物局发布 2025 年我国博物馆事业发展最新数据（2026 年国际博物馆日中国主会场）">E16</a> <a class="tag" href="#ev-E17" title="教育部、国家文物局《关于利用博物馆资源开展中小学教育教学的意见》">E17</a></td></tr>
+<tr><td><b>地理</b></td><td class='small'>学科类（同上，与历史并列）</td><td class='small'>中考、高考计分（最强）</td><td class='small'>同历史：场馆免费 + 官方教育活动已覆盖</td><td><span class='pill no'>禁区：校外不得做</span></td><td class='small'><a class="tag" href="#ev-E14" title="教育部办公厅《关于进一步明确义务教育阶段校外培训学科类和非学科类范围的通知》教监管厅函〔2021〕3 号">E14</a> <a class="tag" href="#ev-E16" title="国家文物局发布 2025 年我国博物馆事业发展最新数据（2026 年国际博物馆日中国主会场）">E16</a> <a class="tag" href="#ev-E17" title="教育部、国家文物局《关于利用博物馆资源开展中小学教育教学的意见》">E17</a></td></tr>
+<tr><td><b>象棋</b></td><td class='small'>非学科 · 体育类（同文件第二条）</td><td class='small'>只有业余等级/棋士称号，不挂钩升学</td><td class='small'>免费引擎与免费对弈 App 已普及；全国象棋特色学校首批 109 所</td><td><span class='pill mid'>可做，但天花板矮</span></td><td class='small'><a class="tag" href="#ev-E14" title="教育部办公厅《关于进一步明确义务教育阶段校外培训学科类和非学科类范围的通知》教监管厅函〔2021〕3 号">E14</a> <a class="tag" href="#ev-E15" title="教育部等十三部门《关于规范面向中小学生的非学科类校外培训的意见》教监管〔2022〕4 号（政策发布稿）">E15</a> <a class="tag" href="#ev-E18" title="教育部办公厅《关于公布 2025—2028 学年面向中小学生的全国性竞赛活动的通知》教监管厅函〔2025〕7 号">E18</a> <a class="tag" href="#ev-E19" title="首批全国象棋特色学校名单公布（109 所）">E19</a></td></tr>
+<tr><td><b>物化生实验（本项目对照）</b></td><td class='small'>学科类（物化生同列第一条）</td><td class='small'>实验操作按分计入中考（铜陵各 10 分）</td><td class='small'>弱：仿真需授权、真实器材需购买、评分点无处可查</td><td><span class='pill go'>可做，但必须限定形态</span></td><td class='small'><a class="tag" href="#ev-E1" title="教育部《关于加强和改进中小学实验教学的意见》教基〔2019〕16 号">E1</a> <a class="tag" href="#ev-E6" title="《2026 年初中学业水平实验操作考试工作方案发布》">E6</a> <a class="tag" href="#ev-E14" title="教育部办公厅《关于进一步明确义务教育阶段校外培训学科类和非学科类范围的通知》教监管厅函〔2021〕3 号">E14</a></td></tr></tbody>
+</table>
+</div>
+<p class="chart-note">图例：<span class="pill no">禁区</span> 校外不得做；<span class="pill mid">天花板矮</span> 可做但无护城河；<span class="pill go">限形态可做</span> 必须避开培训服务形态。</p>
+
+<h3>12.3 历史、地理：需求最硬，恰好是禁区</h3>
+
+<p>这不是解读，是白纸黑字的归类：</p>
+<blockquote class="small" style="margin:12px 0;padding:10px 16px;border-left:3px solid #b91c1c;background:#fdf2f2;color:#3c4450">
+「在开展校外培训时，道德与法治、语文、<b>历史、地理</b>、数学、外语（英语、日语、俄语）、物理、化学、生物按照<b>学科类</b>进行管理。
+对涉及以上学科<b>国家课程标准规定的学习内容</b>进行的校外培训，<b>均列入学科类</b>进行管理。」<br>
+—— 教监管厅函〔2021〕3 号第一条　<a class="tag" href="#ev-E14" title="教育部办公厅《关于进一步明确义务教育阶段校外培训学科类和非学科类范围的通知》教监管厅函〔2021〕3 号">E14</a>
+</blockquote>
+
+<p>「趣味化」「游戏化」「故事化」都不改变归类：只要讲的是课标范围内的内容，就按学科类管。
+再叠加「双减」（<a class="tag" href="#ev-E2" title="中办、国办《关于进一步减轻义务教育阶段学生作业负担和校外培训负担的意见》">E2</a>）第 13/14 条——<b>不再审批新的学科类机构</b>，非学科机构也不得从事学科培训——
+面向义务教育阶段孩子做付费的历史/地理内容，本质是在红线上走路，越像「教知识」越危险。</p>
+
+<p>另一侧的供给已经被体制自己占了：</p>
+<ul>
+<li>2025 年全国博物馆接待观众 <b>15.6 亿人次</b>，免费开放率<b>超 91%</b>，官方开展教育活动 <b>58.3 万场次</b>（<a class="tag" href="#ev-E16" title="国家文物局发布 2025 年我国博物馆事业发展最新数据（2026 年国际博物馆日中国主会场）">E16</a>）；</li>
+<li>政策要求把博物馆教育<b>纳入课后服务</b>、通过<b>馆校共建</b>建立第二课堂，并明确「历史、地理……等学科教学要有机融入博物馆教育内容」（<a class="tag" href="#ev-E17" title="教育部、国家文物局《关于利用博物馆资源开展中小学教育教学的意见》">E17</a>）。</li>
+</ul>
+<p>也就是说：历史/地理的兴趣需求是真的，但供给方是财政养着的场馆，<b>不向你买</b>。</p>
+
+<h3>12.4 象棋：可以合法做，但没有护城河</h3>
+
+<p>象棋属<b>非学科 · 体育类</b>（教监管厅函〔2021〕3 号第二条），允许做，但被加了三道锁（<a class="tag" href="#ev-E15" title="教育部等十三部门《关于规范面向中小学生的非学科类校外培训的意见》教监管〔2022〕4 号（政策发布稿）">E15</a>）：</p>
+<ul>
+<li>须先取得<b>行政许可</b>再做法人登记，从业人员须有相应类别资质；</li>
+<li>不得一次性收取时间跨度超 <b>3 个月或 60 课时</b>、且不得超 <b>5000 元</b>；线上不得晚于 <b>21:00</b>；</li>
+<li><b>「不得将非学科类校外培训结果与大中小学招生入学挂钩」</b>——这一句最关键。</li>
+</ul>
+
+<p>配套再看竞赛通道：47 项全国性竞赛（<a class="tag" href="#ev-E18" title="教育部办公厅《关于公布 2025—2028 学年面向中小学生的全国性竞赛活动的通知》教监管厅函〔2025〕7 号">E18</a>）明确「竞赛以及竞赛产生的结果<b>不得作为中小学招生入学的依据和高考加分项目</b>」。
+象棋的业余等级/棋士称号本身也不换升学。<b>结论：它永远拿不到「实验操作进中考」那种强制力，
+而我们的护城河「评分点对齐」正是建立在强制力之上的。</b></p>
+
+<p class="small">B 端口子也很小：首批全国象棋特色学校 109 所（<a class="tag" href="#ev-E19" title="首批全国象棋特色学校名单公布（109 所）">E19</a>，媒体转述，待协会原文件复核）。
+另外，对弈与棋力训练的免费替代（免费引擎、免费对弈 App）已经普及，本文未取得其用户规模数据，故不给数字。</p>
+
+<h3>12.5 一个必须承认的限制：物化生同样是学科类</h3>
+
+<div class="callout bad">
+<b>这一节同时是对第 7 节 B 方案的限制条件，不写清楚就是自欺。</b><br>
+物理、化学、生物在教监管厅函〔2021〕3 号第一条里与历史、地理并列，<b>同属学科类</b>。
+所以「家长付费买考前实验演练」与「家长付费买历史/地理入门」面对的是<b>同一类监管风险</b>，差别只在交付形态。
+三条形态纪律，缺一条就不要做 C 端：
+<ol style="margin:8px 0 0">
+<li>交付<b>工具 + 内容</b>（可交互页面、评分点清单），<b>不卖课时、不卖「课程包/包过」</b>；</li>
+<li>不做「提分」「包会」「替代老师」类承诺（与 .clinerules/01 一致）；</li>
+<li><b>优先 B 端</b>（学校、教师、场馆），C 端只做知识性演练，不承担培训服务角色。</li>
+</ol>
+</div>
+
+<h3>12.6 真要扩：换场景，不换学科</h3>
+
+<p>扩展的正确姿势不是换学科，是<b>换场景、保留付费方</b>。下面三条都能直接吃现有实验内容资产，且政策有抓手：</p>
+
+<div class="tbl-scroll">
+<table>
+<caption>表 12-2　三条可扩展的场景（付费方仍是机构，不是家长）</caption>
+<thead><tr><th>方向</th><th>政策依据</th><th>与现有资产的关系</th><th>风险</th></tr></thead>
+<tbody>
+<tr><td><b>科学教育课后服务内容包</b></td><td class="small">科学教育列为课后服务必备项目（<a class="tag" href="#ev-E3" title="教育部等十八部门《关于加强新时代中小学科学教育工作的意见》教监管〔2023〕2 号">E3</a>）</td><td class="small">同一批实验，改造成 40 分钟课时包</td><td class="small">采购周期长、单价低，需进校资质</td></tr>
+<tr><td><b>馆校合作 / 研学课程</b></td><td class="small">博物馆教育纳入课后服务、馆校共建、研学分龄设计（<a class="tag" href="#ev-E17" title="教育部、国家文物局《关于利用博物馆资源开展中小学教育教学的意见》">E17</a>）</td><td class="small">实验 + 展品互证，做「场馆里的实验」</td><td class="small">预算小，决策链在馆方与教育部门</td></tr>
+<tr><td><b>给持证非学科机构供内容</b></td><td class="small">非学科类机构须持许可、收费受限（<a class="tag" href="#ev-E15" title="教育部等十三部门《关于规范面向中小学生的非学科类校外培训的意见》教监管〔2022〕4 号（政策发布稿）">E15</a>）</td><td class="small">只供内容与校验，自己不办学、不收款</td><td class="small">毛利被压，且要绑定持证机构</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>12.7 各行的取舍理由与没拿到的东西</h3>
+<ul><li><b>历史</b>：归类是白纸黑字；「趣味化包装」不改变归类——课标规定范围内的学习内容即属学科类。</li>
+<li><b>地理</b>：同上。需求最硬的一类，恰好是政策禁止校外做的一类。</li>
+<li><b>象棋</b>：要行政许可、收费受 5000 元/3 个月限制、明确不得与招生挂钩；竞赛结果也不能换升学。护城河从根上不存在。</li>
+<li><b>物化生实验（本项目对照）</b>：同为学科类：一旦以「课程/课时包/包过」形态面向家长售卖，就落进培训服务；以「工具/内容」形态交付、优先 B 端才安全。</li></ul>
+
+<div class="callout warn">
+<b>没拿到、也不编的：</b>棋类/兴趣类培训市场规模——检索到的两份报告就「2025 年围棋培训规模」分别给出
+<b>87.6 亿元</b>与<b>约 400 亿元</b>，相差 4.5 倍且无原始抽样，<b>不予采信</b>；
+成人兴趣内容的付费率 / ARPPU 无公开披露，因此本文<b>不做任何 TAM / LTV 测算</b>。详见附录 B。
+</div>
+
+<div class="callout ok">
+<b>一句话：</b>扩展的正确姿势不是「换学科」，是「换付费方」。只要付费方还是家长、且手里没有计分权，
+换到象棋、历史、地理只是换一批更强的免费对手。
+</div>
+
+
 <h2 id="sA"><span class="num">A</span>附录 A　证据台账</h2>
-<p>共 13 条。sha256 为<b>正文前 16 位</b>，用于校验抓取内容未被改写；标注「仅检索摘要」的条目未取正文，因此无 sha256。
+<p>共 19 条。sha256 为<b>正文前 16 位</b>，用于校验抓取内容未被改写；标注「仅检索摘要」的条目未取正文，因此无 sha256。
 链接可能随站点改版失效，以抓取时间与 sha256 为准。</p>
 <div class="tbl-scroll">
 <table>
@@ -800,12 +918,54 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;
   <td class="small">物理、化学、生物学实验操作按满分 30 分计入中招录取总成绩。待以省教育厅原文件复核。</td>
   <td class="small"><a href="http://ny.bendibao.com/edu/2026420/29343.shtm" rel="noopener noreferrer nofollow" target="_blank">http://ny.bendibao.com/edu/2026420/29343.shtm</a></td>
   <td class="small">仅检索摘要，未取正文<br>sha256 <span class="small">—</span></td>
+</tr>
+<tr id="ev-E14">
+  <td><span class="badge b-E1">E1</span><br><b>E14</b></td>
+  <td><b>教育部办公厅《关于进一步明确义务教育阶段校外培训学科类和非学科类范围的通知》教监管厅函〔2021〕3 号</b><br><span class="small">中华人民共和国教育部　2021-07-30</span></td>
+  <td class="small">第一条：道德与法治、语文、历史、地理、数学、外语、物理、化学、生物按「学科类」管理，且「对涉及以上学科国家课程标准规定的学习内容进行的校外培训，均列入学科类」。第二条：体育（体育与健康）、艺术（音乐、美术）、综合实践活动按「非学科类」管理。</td>
+  <td class="small"><a href="http://www.moe.gov.cn/srcsite/A29/202107/t20210730_547807.html" rel="noopener noreferrer nofollow" target="_blank">http://www.moe.gov.cn/srcsite/A29/202107/t20210730_547807.html</a></td>
+  <td class="small">2026-10-20 05:24:25<br>sha256 <code>370e7e405820f325</code></td>
+</tr>
+<tr id="ev-E15">
+  <td><span class="badge b-E1">E1</span><br><b>E15</b></td>
+  <td><b>教育部等十三部门《关于规范面向中小学生的非学科类校外培训的意见》教监管〔2022〕4 号（政策发布稿）</b><br><span class="small">中华人民共和国教育部　2022-12-29</span></td>
+  <td class="small">非学科类机构须先取得行政许可再法人登记；从业人员须具备相应类别职业（专业）能力资质；不得一次性收取时间跨度超 3 个月或 60 课时费用且不得超 5000 元；线上培训结束不晚于 21:00；「不得将非学科类校外培训结果与大中小学招生入学挂钩」；引进课后服务须明显低于校外同质价格。</td>
+  <td class="small"><a href="http://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202212/t20221229_1036965.html" rel="noopener noreferrer nofollow" target="_blank">http://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202212/t20221229_1036965.html</a></td>
+  <td class="small">2026-10-20 05:23:27<br>sha256 <code>976c12669af01b12</code></td>
+</tr>
+<tr id="ev-E16">
+  <td><span class="badge b-E1">E1</span><br><b>E16</b></td>
+  <td><b>国家文物局发布 2025 年我国博物馆事业发展最新数据（2026 年国际博物馆日中国主会场）</b><br><span class="small">国家文物局　2026-05-18</span></td>
+  <td class="small">截至 2025 年底全国备案博物馆 7188 家、免费开放率超 91%；2025 年举办陈列展览 4.5 万个、开展教育活动 58.3 万场次、接待观众 15.6 亿人次。</td>
+  <td class="small"><a href="http://www.ncha.gov.cn/art/2026/5/18/art_722_202624.html" rel="noopener noreferrer nofollow" target="_blank">http://www.ncha.gov.cn/art/2026/5/18/art_722_202624.html</a></td>
+  <td class="small">2026-10-20 05:23:41<br>sha256 <code>7e8d6ebabccd9b71</code></td>
+</tr>
+<tr id="ev-E17">
+  <td><span class="badge b-E1">E1</span><br><b>E17</b></td>
+  <td><b>教育部、国家文物局《关于利用博物馆资源开展中小学教育教学的意见》</b><br><span class="small">中华人民共和国教育部　2020-10-20</span></td>
+  <td class="small">要求把博物馆青少年教育「纳入课后服务内容」；通过馆校共建协议、第二课堂建立常态化机制；中小学语文、历史、地理、科学、物理、化学、生物等学科教学要「有机融入博物馆教育内容」；研学活动须分龄设计。</td>
+  <td class="small"><a href="http://www.moe.gov.cn/srcsite/A06/s7053/202010/t20201020_495781.html" rel="noopener noreferrer nofollow" target="_blank">http://www.moe.gov.cn/srcsite/A06/s7053/202010/t20201020_495781.html</a></td>
+  <td class="small">2026-10-20 05:23:29<br>sha256 <code>d555f0f506021175</code></td>
+</tr>
+<tr id="ev-E18">
+  <td><span class="badge b-E1">E1</span><br><b>E18</b></td>
+  <td><b>教育部办公厅《关于公布 2025—2028 学年面向中小学生的全国性竞赛活动的通知》教监管厅函〔2025〕7 号</b><br><span class="small">中华人民共和国教育部　2025-10-29</span></td>
+  <td class="small">确定 47 项竞赛为 2025—2028 学年全国性竞赛活动；「竞赛以及竞赛产生的结果不得作为中小学招生入学的依据和高考加分项目」。附件名单未逐条核对，故本文不就「名单内是否含棋类」下结论。</td>
+  <td class="small"><a href="http://www.moe.gov.cn/srcsite/A29/202510/t20251029_1418393.html" rel="noopener noreferrer nofollow" target="_blank">http://www.moe.gov.cn/srcsite/A29/202510/t20251029_1418393.html</a></td>
+  <td class="small">2026-10-20 05:24:15<br>sha256 <code>2a73ac0ada30f503</code></td>
+</tr>
+<tr id="ev-E19">
+  <td><span class="badge b-E3">E3</span><br><b>E19</b></td>
+  <td><b>首批全国象棋特色学校名单公布（109 所）</b><br><span class="small">新浪财经（转载中国象棋协会公布信息，未见协会原文件）　2019-05-06</span></td>
+  <td class="small">中国象棋协会公布第一批全国象棋特色学校会员名单，共 109 所。为媒体转述，需以协会原文件复核；即使属实，也说明象棋的校内 B 端口子极小。</td>
+  <td class="small"><a href="https://finance.sina.com.cn/roll/2019-05-06/doc-ihvhiqax6834852.shtml" rel="noopener noreferrer nofollow" target="_blank">https://finance.sina.com.cn/roll/2019-05-06/doc-ihvhiqax6834852.shtml</a></td>
+  <td class="small">仅检索摘要，未取正文<br>sha256 <span class="small">—</span></td>
 </tr></tbody>
 </table>
 </div>
-<p class="small">证据等级分布：E1 × 5、
+<p class="small">证据等级分布：E1 × 10、
 E2 × 1、
-E3 × 5、
+E3 × 6、
 E4 × 2。</p>
 
 
@@ -819,7 +979,9 @@ E4 × 2。</p>
 <tbody><tr><td>家庭教育支出 / 单个数字内容 ARPPU</td><td><b>未获取</b></td><td class='small'>检索到的均为豆丁、人人文库等 SEO 文档站拼凑内容，无原始抽样与口径，不予采信。</td></tr>
 <tr><td>「实验内容」细分市场规模</td><td><b>未获取</b></td><td class='small'>公开报告中无此口径；教育智能硬件 1000 亿为预测值，与内容层不可直接换算。</td></tr>
 <tr><td>AI 教育产品的付费转化率 / 留存曲线</td><td><b>未获取</b></td><td class='small'>无公开披露；因此本报告不做 LTV / CAC 测算，只做付费意愿的前置验证。</td></tr>
-<tr><td>各地实验操作考试评分标准全文</td><td><b>部分获取</b></td><td class='small'>仅取得铜陵一地的一手方案；河南等地为媒体转述，需逐地取原文件。</td></tr></tbody>
+<tr><td>各地实验操作考试评分标准全文</td><td><b>部分获取</b></td><td class='small'>仅取得铜陵一地的一手方案；河南等地为媒体转述，需逐地取原文件。</td></tr>
+<tr><td>棋类 / 兴趣类培训市场规模</td><td><b>未获取</b></td><td class='small'>两份豆丁报告就「2025 年围棋培训规模」分别给出 87.6 亿元与约 400 亿元，相差 4.5 倍且无原始抽样，不予采信。</td></tr>
+<tr><td>成人兴趣内容的付费率 / ARPPU</td><td><b>未获取</b></td><td class='small'>无公开披露；因此本文不对「成人兴趣入门」做任何 TAM / LTV 测算。</td></tr></tbody>
 </table>
 </div>
 
@@ -837,7 +999,8 @@ E4 × 2。</p>
 <caption>表 B-2　版本记录</caption>
 <thead><tr><th>版本</th><th>日期</th><th>变更</th></tr></thead>
 <tbody>
-<tr><td><b>v1.0</b></td><td><b>2026-10-20</b></td><td><b>首版：完成政策、竞争、技术、商业、合规五个维度的取证与定位建议</b></td></tr>
+<tr><td>v1.0</td><td>2026-10-20</td><td>首版：完成政策、竞争、技术、商业、合规五个维度的取证与定位建议</td></tr>
+<tr><td><b>v1.1</b></td><td><b>2026-10-20</b></td><td><b>新增第 12 节「范围外：兴趣类赛道的判定」，补 6 条证据（E14—E19，其中 5 条一手），新增 2 条数据缺口；同时对 B 方案补交付形态纪律</b></td></tr>
 </tbody>
 </table>
 </div>
@@ -848,7 +1011,7 @@ E4 × 2。</p>
 
 
 <footer>
-  <p><b>K12 实验内容工具：可行性调研与定位建议</b> · LabLoom 项目组 · 版本 v1.0 · 取证截止 2026-10-20 05:00（UTC+8）</p>
+  <p><b>K12 实验内容工具：可行性调研与定位建议</b> · LabLoom 项目组 · 版本 v1.1 · 取证截止 2026-10-20 05:25（UTC+8）</p>
   <p>本页由 <code>工具/生成调研报告.py</code> 从 <code>EVIDENCE</code> / <code>DATA</code> 常量生成，请勿手改。
   数字口径与证据等级见附录 A、B。图表库同目录 <code>assets/echarts.min.js</code>，不依赖外网 CDN。</p>
   <p>内部决策用 · 不构成对外投资建议。文中「本文判断」为推论，可能被证伪；对外引用请以原始来源为准。</p>
