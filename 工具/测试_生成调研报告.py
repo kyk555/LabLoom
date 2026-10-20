@@ -138,6 +138,8 @@ class TestData(unittest.TestCase):
         self.assertEqual(by["场馆 / 研学亲子任务卡"]["pill"], "go")
         # 家庭实验包受「小学科学归类不明」限制，只能做亲子活动
         self.assertEqual(by["家庭可做的安全实验包"]["pill"], "mid")
+        # 理解型演示：需求侧只有内部讨论、没有用户证据 → 只能「形态受限」
+        self.assertEqual(by["抽象概念「理解型」单点演示"]["pill"], "mid")
         # 三个看着像机会的坑必须一直判死
         self.assertEqual(by["拍照搜题 / 答案直出"]["pill"], "no")
         self.assertEqual(by["卖学科课时包 / 押题班"]["pill"], "no")
@@ -146,6 +148,38 @@ class TestData(unittest.TestCase):
         for t in R.DATA["toc"]:
             if t["pill"] == "no":
                 self.assertIn("别碰", t["verdict"], t["name"])
+
+    def test_toc_candidate_count_matches_body(self):
+        """候选数由脚本现算：数据里有 8 条，正文就必须写 8，不许手写数字漂移。"""
+        self.assertEqual(len(R.DATA["toc"]), 8)
+        html = R.render_s14()
+        self.assertIn("筛了 8 个候选", html)
+        self.assertIn("14.2 8 个候选的筛查结果", html)
+
+    def test_understanding_demo_declares_evidence_gap(self):
+        """「理解型演示」的需求证据只有内部讨论：必须标 evidence_gap，且不得判可试。"""
+        by = {t["name"]: t for t in R.DATA["toc"]}
+        t = by["抽象概念「理解型」单点演示"]
+        self.assertTrue(t.get("evidence_gap"), "需求侧无用户证据，必须标 evidence_gap")
+        self.assertEqual(t["pill"], "mid")
+
+    def test_break_verify_on_evidence_gap_promoted(self):
+        """把标了证据缺口的候选改成「可试」，自检必须报错（防止悄悄升格）。"""
+        by = {t["name"]: t for t in R.DATA["toc"]}
+        t = by["抽象概念「理解型」单点演示"]
+        saved = t["pill"]
+        try:
+            t["pill"] = "go"
+            self.assertTrue(any("证据缺口" in e for e in R.verify_data()))
+        finally:
+            t["pill"] = saved
+
+    def test_s14_has_ip_copyright_rule(self):
+        """§14.1 必须写明 IP 化的著作权边界，否则「用孩子喜欢的 IP」会直接踩侵权。"""
+        html = R.render_s14()
+        self.assertIn("四条铁律", html)
+        self.assertIn("不碰别人的形象", html)
+        self.assertIn("著作权", html)
 
     def test_break_verify_on_toc_without_e1(self):
         saved = R.DATA["toc"][0]["ev"]
@@ -264,7 +298,7 @@ class TestHtml(unittest.TestCase):
     def test_section_14_present(self):
         self.assertIn('id="s14"', self.html)
         self.assertIn("表 14-1", self.html)
-        # To C 的三条铁律与「停手信号」必须在正文，而不是只在数据里
+        # To C 的四条铁律与「停手信号」必须在正文，而不是只在数据里
         self.assertIn("不卖课时", self.html)
         self.assertIn("停手信号", self.html)
 
