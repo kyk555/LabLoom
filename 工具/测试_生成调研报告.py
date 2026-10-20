@@ -36,6 +36,22 @@ class TestData(unittest.TestCase):
         # 一手来源至少 14 条（v1.2 再补入 4 条一手公文），否则报告的证据强度不足
         self.assertGreaterEqual(sum(1 for e in R.EVIDENCE if e["level"] == "E1"), 14)
 
+    def test_e5_upgraded_to_full_text_without_overclaim(self):
+        """E5 必须是指南全文（E1），且不许把原文「避免」升格成「禁止直接复制」。"""
+        e5 = {e["id"]: e for e in R.EVIDENCE}["E5"]
+        self.assertEqual(e5["level"], "E1")
+        self.assertIn("cse.edu.cn", e5["url"])
+        self.assertIn("避免在作业中简单复制", e5["point"])
+        self.assertIn("白名单", e5["point"])
+        self.assertNotIn("禁止学生直接复制", e5["point"])
+
+    def test_e26_afterclass_gate(self):
+        """课后服务通知要进台账，且三条硬门槛写全（刷题禁令 / 遴选招标 / 人员资格）。"""
+        e26 = {e["id"]: e for e in R.EVIDENCE}["E26"]
+        self.assertEqual(e26["level"], "E1")
+        for key in ("刷题备考", "遴选审核", "明显低于", "严禁不符合规定条件的人员"):
+            self.assertIn(key, e26["point"])
+
     def test_beyond_rows_have_primary_source(self):
         """第 12 节的每一条赛道判定都必须有一手依据，不许拿媒体稿定禁区。"""
         lvl = {e["id"]: e["level"] for e in R.EVIDENCE}
@@ -251,6 +267,11 @@ class TestHtml(unittest.TestCase):
         # To C 的三条铁律与「停手信号」必须在正文，而不是只在数据里
         self.assertIn("不卖课时", self.html)
         self.assertIn("停手信号", self.html)
+
+    def test_section_14_5_has_b_end_gate(self):
+        """§14.5 必须点明 B 端进校的资质门槛，否则读者会以为「不做 To C 就直接进校卖」。"""
+        self.assertIn("个人身份不能直接进校提供服务", self.html)
+        self.assertIn("#ev-E26", self.html)
 
     def test_toc_anchors_resolve(self):
         toc = self.html.split('<nav class="toc">', 1)[1].split("</nav>", 1)[0]
