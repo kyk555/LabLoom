@@ -235,17 +235,48 @@ class TestData(unittest.TestCase):
         # 必须写明冲突来自届别，避免下一轮有人拿 E27 去删 E6
         self.assertIn("届别不同", ev["E27"]["point"])
 
-    def test_实验室规程不得被当成安全依据(self):
-        """E28 只证明「学校侧实验操作考核是政策要求」，安全细则在未取的 docx 里。"""
-        e28 = {e["id"]: e for e in R.EVIDENCE}["E28"]
-        self.assertIn("教基二〔2009〕11 号", e28["title"])
-        self.assertIn("综合素质评价体系", e28["point"])
-        self.assertIn("不构成任何实验室安全条款的依据", e28["point"])
+    def test_安全条款已取一手原文(self):
+        """不能只写「E28 里没有」：E29 是规程全文，E1 第 8 条是部级安全管理要求。"""
+        ev = {e["id"]: e for e in R.EVIDENCE}
+        self.assertIn("第十五条", ev["E29"]["point"])
+        self.assertIn("确保教师和学生的人身安全", ev["E29"]["point"])
+        self.assertIn("第二十三条", ev["E29"]["point"])          # 操作级细则交地方自定
+        self.assertEqual(ev["E29"]["level"], "E1")
+        self.assertIn("强化实验教学安全管理", ev["E1"]["point"])
+        self.assertIn("有危险性、破坏性和对环境有危害的实验", ev["E1"]["point"])
+        # E28 是转发通知，必须指向规程正文；旧结论「不含安全条款」必须已删除
+        self.assertIn("见 E29", ev["E28"]["point"])
+        self.assertNotIn("不构成任何实验室安全条款的依据", ev["E28"]["point"])
+
+    def test_每条缺口都写了已取到的一手材料(self):
+        """缺口表只写「未获取」等于没交代工作：每条都得说清手里已经有什么。"""
+        for g in R.DATA["gaps"]:
+            self.assertIn("got", g, "缺口「%s」没写已取到的材料" % g["item"])
+            self.assertGreater(len(g["got"]), 10, "缺口「%s」的 got 太短" % g["item"])
+
+    def test_法规条款已入库且可核对(self):
+        ev = {e["id"]: e for e in R.EVIDENCE}
+        self.assertEqual(ev["E31"]["level"], "E1")
+        self.assertIn("第二十四条", ev["E31"]["point"])
+        self.assertIn("保证性承诺", ev["E31"]["point"])
+        self.assertIn("不满十四周岁", ev["E32"]["point"])
+        self.assertIn("在线教育网络产品和服务", ev["E32"]["point"])
+
+    def test_装备规范是行业标准不是国家标准(self):
+        """曾把 JY/T 0385-2006 记成「国家标准计划」，名称也错成「装备安全规范」。"""
+        e30 = {e["id"]: e for e in R.EVIDENCE}["E30"]
+        self.assertIn("JY/T 0385-2006", e30["point"])
+        self.assertIn("JY/T 0386-2006", e30["point"])
+        self.assertIn("2006 年 10 月 1 日起实施", e30["point"])
+        # 发布句与更正句各需一处「教育行业标准」，只写一处说明有一处被改回「国家标准」
+        self.assertGreaterEqual(e30["point"].count("教育行业标准"), 2,
+                                "两处都必须写明是教育行业标准（JY/T），不能写成国家标准")
+        self.assertNotIn("GB/T 0385", e30["point"])
 
     def test_两条新缺口已登记(self):
         gaps = {g["item"]: g for g in R.DATA["gaps"]}
         self.assertTrue(any("区县" in k for k in gaps))
-        self.assertTrue(any("实验室安全" in k for k in gaps))
+        self.assertTrue(any("操作级安全细则" in k for k in gaps))
         for g in R.DATA["gaps"]:
             self.assertIn(g["status"], ("未获取", "部分获取"))
             self.assertGreater(len(g["why"]), 20)
