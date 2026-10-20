@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>圆面积割补 · 内切圆与四角阴影（候选样张 v0.1）</title>
+<style>
+  :root{ --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc; --blue:#0284c7; --amber:#b45309; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:16px/1.7 "Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 64px}
+  h1{font-size:22px;margin:0 0 6px}
+  h2{font-size:17px;margin:32px 0 10px;padding-left:10px;border-left:4px solid var(--blue)}
+  h3{font-size:15px;margin:18px 0 6px;color:var(--muted)}
+  .status{background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:10px 14px;margin:14px 0 0;font-size:14px}
+  .status b{color:var(--amber)}
+  .scope{background:#eef2ff;border:1px solid #a5b4fc;border-radius:8px;padding:10px 14px;margin:10px 0 0;font-size:14px;color:#3730a3}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px;margin:14px 0}
+  .grid{display:flex;gap:18px;flex-wrap:wrap}
+  .grid > *{flex:1 1 320px;min-width:280px}
+  svg{width:100%;height:auto;display:block}
+  .ctrl{margin:12px 0}
+  .ctrl label{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+  .ctrl label b{color:var(--ink);font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;margin:6px 0 0;accent-color:var(--blue)}
+  .readout{border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:12px}
+  .readout div{display:flex;justify-content:space-between;gap:12px;padding:8px 12px;font-size:15px}
+  .readout div:nth-child(odd){background:#f1f5f9}
+  .readout .key{color:var(--muted)}
+  .readout .val{font-variant-numeric:tabular-nums;font-weight:700}
+  .const{color:#15803d}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f1f5f9;font-weight:600}
+  ul,ol{padding-left:22px}
+  li{margin:4px 0}
+  .small{font-size:13px;color:var(--muted)}
+  .todo{color:var(--amber);font-weight:600}
+  code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:14px}
+  .foot{margin-top:36px;padding-top:14px;border-top:1px dashed var(--line);font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>圆面积割补：内切圆、四角阴影与「化圆为方」</h1>
+<p class="small">适用：小学数学六年级（圆的认识与面积）· 候选样张 v0.1</p>
+
+<div class="scope">
+  <b>范围说明：</b>数学不属于本项目的学科范围（小学科学、初中理化生、高中理化生）。
+  本页是 R0 内部讨论提出的「抽象概念『理解型』单点演示」这一<b>候选方向</b>的样张，
+  用来检验「把抽象概念做成可拖动、可复算的一页」这件事能不能做到位，
+  <b>不代表项目要接数学内容</b>。
+</div>
+
+<div class="status">
+  <b>状态：依据待核实。</b>全部数值由公式现算（<code>π 取 3.14</code>，与小学教材口径一致），
+  但<b>课标条目与教材页码尚未核到原文</b>，第 9 项字段未完成，<b>不得外发</b>，仅供内部评审。
+</div>
+
+<h2>1　演示一：四角阴影占正方形多少</h2>
+<div class="card">
+  <div class="grid">
+    <div>
+      <svg viewBox="0 0 240 240" role="img" aria-label="正方形内切一个圆，四角为阴影">
+        <path id="corners" d="M40,40 H200 V200 H40 Z M120,40 A80,80 0 1 0 120,200 A80,80 0 1 0 120,40 Z"
+              fill="#f59e0b" fill-rule="evenodd" opacity="0.85"></path>
+        <circle cx="120" cy="120" r="80" fill="#bae6fd" stroke="#0284c7" stroke-width="2"></circle>
+        <rect x="40" y="40" width="160" height="160" fill="none" stroke="#475569" stroke-width="2"></rect>
+        <line x1="40" y1="200" x2="200" y2="200" stroke="#475569" stroke-width="1"></line>
+        <text x="120" y="228" font-size="12" fill="#64748b" text-anchor="middle">边长 a</text>
+      </svg>
+      <p class="small">橙色 = 四角阴影；蓝色 = 内切圆；圆的半径 <code>r = a ÷ 2</code>。</p>
+    </div>
+    <div>
+      <div class="ctrl">
+        <label>正方形边长 a <b id="aLabel">8 cm</b></label>
+        <input id="a" type="range" min="4" max="12" step="1" value="8">
+      </div>
+      <div class="readout">
+        <div><span class="key">半径 r = a ÷ 2</span><span class="val"><span id="r">4.0</span> cm</span></div>
+        <div><span class="key">正方形面积 a²</span><span class="val"><span id="sq">64.00</span> cm²</span></div>
+        <div><span class="key">圆面积 πr²</span><span class="val"><span id="cir">50.24</span> cm²</span></div>
+        <div><span class="key">四角阴影 a² − πr²</span><span class="val"><span id="cor">13.76</span> cm²</span></div>
+        <div><span class="key">阴影占正方形</span><span class="val const" id="ratio">21.50 %</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="small" style="margin-top:10px">
+    <b>拖一下就会发现：</b>边长换成 4 cm 或 12 cm，阴影面积从 3.44 cm² 变到 30.96 cm²，
+    但<b>「阴影占正方形」这个比例一直是 21.5 %</b>——因为 a² 与 r² 一起按平方缩放，比例与大小无关。
+    这是本页最值得课上花 1 分钟追问的地方。
+  </p>
+</div>
+
+<h2>2　演示二：把圆剪成 n 份，交错拼起来</h2>
+<div class="card">
+  <svg id="puzzle" viewBox="0 0 440 220" role="img" aria-label="圆分割成若干扇形后交错拼接的示意"></svg>
+  <p class="small" id="puzzleNote">拖动下面的滑块，看图形怎么从「锯齿」变成「近似长方形」。</p>
+  <div class="ctrl">
+    <label>把圆平均分成 <b id="nLabel">16 份</b></label>
+    <input id="n" type="range" min="8" max="64" step="8" value="16">
+  </div>
+  <div class="readout">
+    <div><span class="key">每份圆心角</span><span class="val"><span id="ang">22.5</span> °</span></div>
+    <div><span class="key">拼图面积 ÷ 圆面积</span><span class="val" id="areaRatio">97.45 %</span></div>
+    <div><span class="key">拼图底边 ÷ 半圆周长（πr）</span><span class="val" id="edgeRatio">99.36 %</span></div>
+    <div><span class="key">拼成的长方形：长 × 宽</span><span class="val">πr × r = πr²</span></div>
+  </div>
+  <p class="small" style="margin-top:10px">
+    <b>这里必须较真：</b>两个比值不到 100 %，<u>不是割补丢了面积</u>，而是<b>本页的画法</b>——
+    为了能用直线画出来，每个扇形被画成了「等腰三角形」（底 = 弦长、高 = 半径 × cos(圆心角/2)），
+    三角形比扇形小一点。份数越多，三角形越贴扇形，比值越接近 100 %。
+    真正的割补（沿半径剪开、交错拼合）面积<b>严格不变</b>：拼成的长方形长 = 半个圆周长 = πr，宽 = r，面积 = πr²。
+  </p>
+</div>
+
+<h2>3　预期现象（可观察、可复述）</h2>
+<ol>
+  <li>演示一：拖动 a，阴影面积跟着变，<b>但「阴影占正方形」始终是 21.5 %</b>。</li>
+  <li>演示一：a 从 4 变到 8（翻一倍），正方形面积从 16 变到 64（<b>4 倍</b>），阴影面积也从 3.44 变到 13.76（<b>4 倍</b>）。</li>
+  <li>演示二：n 从 8 增到 64，锯齿越来越细，图形越来越像长方形。</li>
+  <li>演示二：两个比值都随 n 增大而<b>单调上升并趋近 100 %</b>，但<b>永远到不了 100 %</b>（题目里的「近似」二字不能省）。</li>
+</ol>
+
+<h2>4　结论（能由上面的现象推出来）</h2>
+<div class="card">
+  <p style="margin:0 0 8px"><b>圆的面积 S = πr²</b>；本页四角阴影 <b>S阴影 = a²(1 − π/4) ≈ 0.215 a²</b>。</p>
+  <ul style="margin:0">
+    <li>由现象 1、2：面积按边长的<b>平方</b>增长，比例与大小无关——所以「阴影占 21.5 %」是一条与 a 无关的恒定值。</li>
+    <li>由现象 3、4：把圆分成越多份，拼出的图形越接近长方形；长方形长 πr、宽 r，故 S = πr·r = πr²。这是圆面积公式的<b>推导</b>，不是量出来的。</li>
+    <li>割补只改变形状，不改变面积——现象 4 中比值到不了 100 % 是画法误差，不构成反例。</li>
+  </ul>
+</div>
+
+<h2>5　参数与单位</h2>
+<table>
+  <thead><tr><th>量</th><th>符号</th><th>单位</th><th>本页取值</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>正方形边长</td><td>a</td><td>cm</td><td>4—12，步长 1</td><td>圆是正方形的内切圆，故 r = a ÷ 2</td></tr>
+    <tr><td>半径</td><td>r</td><td>cm</td><td>a ÷ 2（2—6）</td><td>不是 a，这是第 1 个易错点</td></tr>
+    <tr><td>圆周率</td><td>π</td><td>—</td><td>3.14</td><td>小学计算口径；结果写「约等于」</td></tr>
+    <tr><td>分割份数</td><td>n</td><td>份</td><td>8、16、24、32、40、48、56、64</td><td>必须偶数，才能上下交错对齐</td></tr>
+    <tr><td>每份圆心角</td><td>360°/n</td><td>°</td><td>由 n 算出</td><td>n=16 时为 22.5°</td></tr>
+    <tr><td>拼图长 × 宽</td><td>πr × r</td><td>cm</td><td>由 r 算出</td><td>长是<b>半个</b>圆周长，不是整个圆周长</td></tr>
+  </tbody>
+</table>
+
+<h2>6　常见错误与学生迷思</h2>
+<table>
+  <thead><tr><th>#</th><th>错误说法</th><th>错在哪</th><th>应该怎么说</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>「半径就是边长，r = a」</td><td>内切圆只占正方形的一半宽</td><td>r = a ÷ 2</td></tr>
+    <tr><td>2</td><td>「阴影是半圆 / 弓形」</td><td>阴影分成四块，每块是一个角</td><td>阴影 = 正方形 − 整圆</td></tr>
+    <tr><td>3</td><td>「边长翻倍，面积也翻倍」</td><td>面积按平方缩放</td><td>a ×2 → 面积 ×4</td></tr>
+    <tr><td>4</td><td>「份数越多，圆面积越大」</td><td>割补不改变面积</td><td>变的只是形状是否像长方形</td></tr>
+    <tr><td>5</td><td>「拼成长方形的长 = 圆周长 2πr」</td><td>上下各一半，合起来才是整圈</td><td>长 = πr（半个圆周长）</td></tr>
+    <tr><td>6</td><td>「π 取 3.14 算出来是精确值」</td><td>3.14 本身是近似</td><td>写「约」；用 3.14 与用 3.14159 结果略有差别</td></tr>
+  </tbody>
+</table>
+<h3>学生迷思（要当面问，不要只讲）</h3>
+<ul>
+  <li><b>「公式是量出来的」</b>——圆的面积没法用尺子直接量，公式是靠割补<b>推</b>出来的。</li>
+  <li><b>「形状变了，面积就变了」</b>——剪开重拼只移动纸片，不增不减。</li>
+  <li><b>「份数无限多就完全变成长方形」</b>——严格说是「无限接近」，数学上用极限表述；小学阶段说「越接近」即可。</li>
+</ul>
+
+<h2>7　安全提示</h2>
+<div class="card">
+  <p style="margin:0"><b>本页：</b>纯屏幕演示，无实物操作 → <b>无需特殊防护</b>。</p>
+  <p style="margin:8px 0 0"><b>若课上按第 2 节动手剪纸：</b>用圆头手工剪，低年级须教师在场；纸屑不入口、不抛撒；先用圆规画线再剪，避免剪歪划手。</p>
+</div>
+
+<h2>8　依据来源</h2>
+<table>
+  <thead><tr><th>项目</th><th>内容</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>公式</td><td>圆面积 S = πr²；圆周长 C = 2πr；正方形面积 a²</td><td>小学教材核心公式，本页数值已逐个验算</td></tr>
+    <tr><td>课标条目</td><td>《义务教育数学课程标准（2022 年版）》第三学段「图形的认识与测量」中关于圆面积的要求</td><td class="todo">待核实：未取到课标原文，不写条款号与页码</td></tr>
+    <tr><td>教材页码</td><td>人教版六年级上册「圆」单元</td><td class="todo">待核实：未核到具体版本、印次与页码</td></tr>
+    <tr><td>π 取值</td><td>3.14</td><td>小学计算口径，已在第 5 节标明</td></tr>
+  </tbody>
+</table>
+<p class="small">本样张第 9 项字段<b>未完成</b>，状态 <b>v0.1 草稿</b>，只能用于内部评审，<b>不得外发</b>。</p>
+
+<h2>9　字段自检（9 项）</h2>
+<table>
+  <thead><tr><th>#</th><th>字段</th><th>位置</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>学段 · 学科 · 课标条目</td><td>页首 + 第 8 节</td><td>学段学科 ✓ ／ 课标条目 <span class="todo">待补</span></td></tr>
+    <tr><td>2</td><td>器材清单</td><td>第 7 节（剪纸版）</td><td>✓（本页无器材，剪纸版已给）</td></tr>
+    <tr><td>3</td><td>操作步骤</td><td>第 1、2 节滑块 + 第 7 节剪纸</td><td>✓</td></tr>
+    <tr><td>4</td><td>参数与单位</td><td>第 5 节</td><td>✓</td></tr>
+    <tr><td>5</td><td>预期现象</td><td>第 3 节</td><td>✓</td></tr>
+    <tr><td>6</td><td>结论</td><td>第 4 节</td><td>✓</td></tr>
+    <tr><td>7</td><td>易错点 / 迷思</td><td>第 6 节</td><td>✓</td></tr>
+    <tr><td>8</td><td>安全提示</td><td>第 7 节</td><td>✓</td></tr>
+    <tr><td>9</td><td>依据来源</td><td>第 8 节</td><td class="todo">✗ 待补（课标 / 教材原文）</td></tr>
+  </tbody>
+</table>
+
+<div class="foot">
+  候选样张 v0.1 ｜ 2026-10-20 ｜ 单文件 HTML，无外网依赖，双击即可打开，手机浏览器可读<br>
+  数学不在本项目学科范围内，本页只用于检验「理解型演示」这一候选方向是否做得动；<b>不承诺提分、不替代教师</b>。
+</div>
+</div>
+<script>
+(function () {
+  var PI = 3.14;
+  var RP = 110;        // 拼图里「半径」的像素长度（只用于画图）
+  var BASE = 170;      // 下边线 y
+  var BOXW = 440;
+
+  function $(id) { return document.getElementById(id); }
+
+  function renderSquare() {
+    var a = +$('a').value;
+    var r = a / 2;
+    var sq = a * a;
+    var cir = PI * r * r;
+    var cor = sq - cir;
+    $('aLabel').textContent = a + ' cm';
+    $('r').textContent = r.toFixed(1);
+    $('sq').textContent = sq.toFixed(2);
+    $('cir').textContent = cir.toFixed(2);
+    $('cor').textContent = cor.toFixed(2);
+    $('ratio').textContent = (cor / sq * 100).toFixed(2) + ' %';
+  }
+
+  function renderPuzzle() {
+    var n = +$('n').value;
+    var c = 2 * RP * Math.sin(Math.PI / n);   // 弦长
+    var h = RP * Math.cos(Math.PI / n);       // 三角形的高
+    var w = (n + 1) * c / 2;                  // 拼图总宽（像素）
+    var x0 = (BOXW - w) / 2;
+    var parts = [];
+    var colors = ['#0284c7', '#38bdf8'];
+    for (var i = 0; i < n; i++) {
+      var x = x0 + i * c / 2;
+      var d;
+      if (i % 2 === 0) {
+        d = 'M' + x.toFixed(1) + ',' + BASE + ' L' + (x + c).toFixed(1) + ',' + BASE +
+            ' L' + (x + c / 2).toFixed(1) + ',' + (BASE - h).toFixed(1) + ' Z';
+      } else {
+        d = 'M' + x.toFixed(1) + ',' + (BASE - h).toFixed(1) + ' L' + (x + c).toFixed(1) + ',' +
+            (BASE - h).toFixed(1) + ' L' + (x + c / 2).toFixed(1) + ',' + BASE + ' Z';
+      }
+      parts.push('<path d="' + d + '" fill="' + colors[i % 2] +
+                 '" opacity="0.9" stroke="#0369a1" stroke-width="0.6"/>');
+    }
+    parts.push('<line x1="' + x0.toFixed(1) + '" y1="' + (BASE + 6) + '" x2="' + (x0 + w).toFixed(1) +
+               '" y2="' + (BASE + 6) + '" stroke="#475569" stroke-width="1"/>');
+    parts.push('<text x="' + (BOXW / 2) + '" y="' + (BASE + 22) +
+               '" font-size="12" fill="#64748b" text-anchor="middle">底边 ≈ 半圆周长 = πr（n 越大越接近）</text>');
+    $('puzzle').innerHTML = parts.join('');
+
+    var areaRatio = (n / 2) * Math.sin(2 * Math.PI / n) / Math.PI;
+    var edgeRatio = n * Math.sin(Math.PI / n) / Math.PI;
+    $('nLabel').textContent = n + ' 份';
+    $('ang').textContent = (360 / n).toFixed(1);
+    $('areaRatio').textContent = (areaRatio * 100).toFixed(2) + ' %';
+    $('edgeRatio').textContent = (edgeRatio * 100).toFixed(2) + ' %';
+    $('puzzleNote').textContent = n <= 16
+      ? '锯齿还很明显：底边凹凸不平，离长方形还远。'
+      : (n <= 32 ? '锯齿变细了：上下两条边开始看起来像直线。'
+                 : '几乎看不出锯齿：再增加份数还会更平，但永远只是「接近」。');
+  }
+
+  $('a').addEventListener('input', renderSquare);
+  $('n').addEventListener('input', renderPuzzle);
+  renderSquare();
+  renderPuzzle();
+})();
+</script>
+</body>
+</html>
+

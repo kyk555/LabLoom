@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>阿基米德原理 · 浸入比例与浮力（样本 v0.1）</title>
+<style>
+  :root{
+    --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc;
+    --blue:#0284c7; --amber:#b45309; --warn:#fef3c7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:16px/1.7 "Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 64px}
+  h1{font-size:22px;margin:0 0 6px}
+  h2{font-size:17px;margin:32px 0 10px;padding-left:10px;border-left:4px solid var(--blue)}
+  h3{font-size:15px;margin:18px 0 6px;color:var(--muted)}
+  .status{background:var(--warn);border:1px solid #f59e0b;border-radius:8px;
+          padding:10px 14px;margin:14px 0 0;font-size:14px}
+  .status b{color:var(--amber)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px;margin:14px 0}
+  .grid{display:flex;gap:18px;flex-wrap:wrap}
+  .grid > *{flex:1 1 300px;min-width:280px}
+  svg{width:100%;height:auto;display:block}
+  .ctrl{margin:12px 0}
+  .ctrl label{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+  .ctrl label b{color:var(--ink);font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;margin:6px 0 0;accent-color:var(--blue)}
+  select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:#fff}
+  .readout{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .readout div{display:flex;justify-content:space-between;gap:12px;padding:8px 12px;font-size:15px}
+  .readout div:nth-child(odd){background:#f1f5f9}
+  .readout .key{color:var(--muted)}
+  .readout .val{font-variant-numeric:tabular-nums;font-weight:700}
+  .same{color:#15803d}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f1f5f9;font-weight:600}
+  ul,ol{padding-left:22px}
+  li{margin:4px 0}
+  .small{font-size:13px;color:var(--muted)}
+  .todo{color:var(--amber);font-weight:600}
+  code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:14px}
+  .foot{margin-top:36px;padding-top:14px;border-top:1px dashed var(--line);font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>阿基米德原理：浸入比例、排开液体的重力与浮力</h1>
+<p class="small">适用：初中物理（八年级下）· 样本 v0.1 · 本页为<b>屏幕演示</b>，不是真实实验</p>
+
+<div class="status">
+  <b>状态：依据待核实。</b>公式与数值换算已逐条核算（<code>F浮 = ρ液 g V排</code>，量纲一致），
+  但<b>课标条目与教材页码尚未核到原文</b>，因此本样本<u>不满足交付条件（第 9 项「依据来源」待补）</u>，
+
+<h2>1　演示：拖动滑块，看三个量怎么变</h2>
+<div class="card">
+  <div class="grid">
+    <div>
+      <svg viewBox="0 0 420 320" role="img" aria-label="烧杯、液面与浸入液体中的立方体">
+        <line x1="60" y1="110" x2="360" y2="110" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4 4"/>
+        <rect x="80" y="50" width="260" height="230" fill="none" stroke="#94a3b8" stroke-width="3" rx="4"/>
+        <rect id="liquid" x="82" y="110" width="256" height="168" fill="#7dd3fc" opacity="0.5"/>
+        <line x1="80" y1="110" x2="340" y2="110" stroke="#0284c7" stroke-width="2"/>
+        <text x="346" y="106" font-size="12" fill="#0284c7">液面</text>
+        <line id="string" x1="220" y1="18" x2="220" y2="120" stroke="#94a3b8" stroke-width="2"/>
+        <rect x="196" y="4" width="48" height="16" rx="3" fill="#e2e8f0" stroke="#94a3b8"/>
+        <text x="220" y="16" font-size="10" fill="#475569" text-anchor="middle">测力计</text>
+        <rect id="cube" x="180" y="40" width="80" height="80" fill="#fbbf24" stroke="#b45309" stroke-width="2"/>
+        <text x="220" y="290" font-size="12" fill="#64748b" text-anchor="middle">液体</text>
+      </svg>
+      <p class="small" id="visualNote">方块底面刚好接触液面（V排 = 0）</p>
+    </div>
+    <div>
+      <div class="ctrl">
+        <label>物体体积 V <b id="vLabel">50 cm³</b></label>
+        <input id="v" type="range" min="20" max="100" step="5" value="50">
+      </div>
+      <div class="ctrl">
+        <label>浸入比例 <b id="pLabel">100 %</b></label>
+        <input id="p" type="range" min="0" max="100" step="5" value="100">
+      </div>
+      <div class="ctrl">
+        <label>浸没后再下沉的深度 <b id="dLabel">0 cm</b></label>
+        <input id="d" type="range" min="0" max="10" step="1" value="0" disabled>
+      </div>
+      <div class="ctrl">
+        <label>液体 <b id="rhoLabel">1.0 g/cm³</b></label>
+        <select id="liq">
+          <option value="water" selected>水（1.0 g/cm³）</option>
+          <option value="salt">盐水（1.1 g/cm³）</option>
+          <option value="alcohol">酒精（0.8 g/cm³）</option>
+        </select>
+        <select id="gsel" style="margin-left:8px">
+          <option value="10" selected>g = 10 N/kg</option>
+          <option value="9.8">g = 9.8 N/kg</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="readout" style="margin-top:14px">
+    <div><span class="key">排开液体的体积 V排</span><span class="val"><span id="vdisp">50.0</span> cm³ = <span id="vm3">5.00×10⁻⁵</span> m³</span></div>
+    <div><span class="key">液体密度 ρ液</span><span class="val"><span id="rho">1.0</span> g/cm³ = <span id="rhokg">1000</span> kg/m³</span></div>
+    <div><span class="key">浮力 F浮 = ρ液 g V排</span><span class="val"><span id="fb">0.500</span> N</span></div>
+    <div><span class="key">排开液体的重力 G排 = m排 g</span><span class="val"><span id="gp">0.500</span> N</span></div>
+    <div><span class="key">两者之差</span><span class="val same" id="diff">0.000 N</span></div>
+  </div>
+  <p class="small" style="margin-top:10px">
+    <b>这里要较真：</b>页面上 F浮 与 G排 永远相等，是因为两者由<b>同一个式子</b> <code>ρ液 g V排</code> 算出，
+    <u>不是测量结果，不能当作实验证据</u>。原理要靠真实实验验证：弹簧测力计测出 F浮，量筒测出 V排，两条路各自算一遍再比。
+  </p>
+  <p class="small" id="visualNote2"></p>
+</div>
+
+<h2>2　预期现象（可观察、可复述）</h2>
+<ol>
+  <li>浸入比例从 0 拖到 100 %：<b>F浮 一直变大</b>，且与「浸入比例」成正比（0 % 时为 0，100 % 时为最大值）。</li>
+  <li>浸入比例到 100 % 后，再拖动「下沉深度」：<b>F浮 一点不变</b>，读数停在同一个数上。</li>
+  <li>把液体从水换成盐水（1.1 g/cm³）：同样体积、同样浸入比例下 <b>F浮 变大 10 %</b>；换成酒精（0.8）则变小 20 %。</li>
+  <li>把 g 从 10 换成 9.8：所有浮力读数 <b>按 0.98 倍缩小</b>，但不影响「随 V排 成正比」这个规律。</li>
+</ol>
+
+<h2>3　结论（必须能由上面的现象推出来）</h2>
+<div class="card">
+  <p style="margin:0 0 8px"><b>F浮 = ρ液 · g · V排</b>（阿基米德原理）</p>
+  <ul style="margin:0">
+    <li>由现象 1 与 2：浮力只由「排开液体的体积」决定，与物体浸得多深无关；</li>
+    <li>由现象 3：液体越密，同样的 V排 产生越大的浮力；</li>
+    <li>因此浮力 = 排开液体的重力，写作 <b>F浮 = G排</b>。</li>
+  </ul>
+  <p class="small" style="margin:10px 0 0">
+    注意结论的边界：<b>F浮 与物体本身的重力无关</b>。物体上浮、下沉、悬浮取决于 F浮 与 G物 的大小关系，
+    那是另一条判断（浮沉条件），不能从本页读数直接得出。
+  </p>
+</div>
+
+<h2>4　参数与单位（每个数值都能复算）</h2>
+<table>
+  <thead><tr><th>量</th><th>符号</th><th>单位</th><th>本页取值 / 范围</th><th>换算与说明</th></tr></thead>
+  <tbody>
+    <tr><td>物体体积</td><td>V</td><td>cm³</td><td>20—100，步长 5</td><td>与 V排 不是一回事，只有浸没时相等</td></tr>
+    <tr><td>浸入比例</td><td>p</td><td>%</td><td>0—100，步长 5</td><td>V排 = V × p ÷ 100</td></tr>
+    <tr><td>排开液体的体积</td><td>V排</td><td>cm³ 与 m³ 同时给</td><td>由 V、p 算出</td><td>1 cm³ = 1×10⁻⁶ m³</td></tr>
+    <tr><td>液体密度</td><td>ρ液</td><td>g/cm³</td><td>水 1.0 / 盐水 1.1 / 酒精 0.8</td><td>1 g/cm³ = 1000 kg/m³；三者为常用近似值，非实测</td></tr>
+    <tr><td>重力加速度</td><td>g</td><td>N/kg</td><td>10 或 9.8，可切换</td><td>初中计算常用 10；取 9.8 时所有结果按 0.98 倍变化</td></tr>
+    <tr><td>浮力</td><td>F浮</td><td>N</td><td>算得，保留 3 位小数</td><td>例：50 cm³ 全浸水中，g=10 → 1000×10×5×10⁻⁵ = 0.500 N</td></tr>
+  </tbody>
+</table>
+<p class="small">
+  <b>量纲自查：</b>ρ(kg/m³) × g(N/kg) × V(m³) = N。若把 ρ 用 g/cm³、V 用 cm³ 直接相乘，
+  结果会小 1000 倍——这是本页最常见的错，第 6 节列为第 1 条。
+</p>
+
+<h2>5　真实实验怎么做（本页只是演示，不能替代动手）</h2>
+<table>
+  <thead><tr><th>器材</th><th>规格 / 替代</th></tr></thead>
+  <tbody>
+    <tr><td>弹簧测力计</td><td>0—5 N，分度值 0.1 N；无合适量程则换 0—2 N</td></tr>
+    <tr><td>溢水杯</td><td>可用剪口塑料瓶 + 弯吸管代替，接口用胶密封</td></tr>
+    <tr><td>小桶 / 量筒</td><td>量筒 100 mL，分度值 1 mL</td></tr>
+    <tr><td>被测物</td><td>石块或金属块，用细线系牢</td></tr>
+  </tbody>
+</table>
+<ol>
+  <li>用测力计测出石块重力 <b>G</b>（读数前先校零）。</li>
+  <li>溢水杯装水至恰好不溢出，把小桶放在溢水口下方。</li>
+  <li>石块<b>缓缓</b>浸没，等水面不再溢出后读测力计示数 <b>F示</b>，得 <b>F浮 = G − F示</b>。</li>
+  <li>用量筒量出小桶中水的体积，即 <b>V排</b>；算 <b>G排 = ρ水 g V排</b>（ρ水 取 1.0×10³ kg/m³）。</li>
+  <li>比较 F浮 与 G排：两者在误差范围内相等，才算完成验证。</li>
+</ol>
+<p class="small">为什么必须动手：本页的 F浮 与 G排 是同一个公式算出来的，相等是<b>设计使然</b>；只有「测力计一路、量筒一路」才算两条独立证据。</p>
+
+<h2>6　常见错误与学生迷思</h2>
+<table>
+  <thead><tr><th>#</th><th>错误说法</th><th>错在哪</th><th>应该怎么说</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>「V排 就是物体的体积」</td><td>只有<b>浸没</b>时两者才相等</td><td>V排 = V × 浸入比例</td></tr>
+    <tr><td>2</td><td>「ρ=1.0、V=50，所以 F=1.0×10×50=500 N」</td><td>g/cm³ 与 cm³ 直接相乘，<b>差了 1000 倍</b></td><td>1.0 g/cm³ → 1000 kg/m³；50 cm³ → 5×10⁻⁵ m³；F=0.500 N</td></tr>
+    <tr><td>3</td><td>「物体沉得越深，浮力越大」</td><td>浸没后 V排 不再增加</td><td>F浮 只由 ρ液、V排 决定，与深度无关</td></tr>
+    <tr><td>4</td><td>「浮力等于物体的重力」</td><td>把原理与<b>浮沉条件</b>混成一条</td><td>F浮 = G排；上浮/下沉看 F浮 与 G物 的关系</td></tr>
+    <tr><td>5</td><td>「排开液体的体积 = 杯里液体的总量」</td><td>概念不同：只看物体挤开的那一部分</td><td>V排 是被物体占去的那块空间</td></tr>
+  </tbody>
+</table>
+<h3>学生迷思（需要当面纠正，不是背下来就行）</h3>
+<ul>
+  <li><b>「重的物体浮力大」</b>——错。砖头比木块重，浸没时若体积更小，浮力反而更小。</li>
+  <li><b>「沉到底就没有浮力了」</b>——错。沉底时仍有浮力，只是 F浮 &lt; G物，所以还要受容器底的支持力。</li>
+  <li><b>「在盐水里浮力大是因为盐水更重」</b>——表述不准。是<b>密度</b>更大，在同样 V排 下产生更大的 F浮。</li>
+</ul>
+
+<h2>7　安全提示</h2>
+<div class="card">
+  <p style="margin:0"><b>本页：</b>纯屏幕演示，无实物操作、无明火、无化学品、无高压 → <b>无需特殊防护</b>。</p>
+  <p style="margin:8px 0 0"><b>若按第 5 节动手做：</b></p>
+  <ul style="margin:6px 0 0">
+    <li>玻璃量筒、溢水杯轻拿轻放，不当作加热容器；</li>
+    <li>水洒到地面立即擦干，防止滑倒；</li>
+    <li>石块用细线系牢，避免脱手砸落或砸破杯子；</li>
+    <li>弹簧测力计不得超过量程（本实验用 0—5 N 足够）。</li>
+  </ul>
+</div>
+
+<h2>8　依据来源</h2>
+<table>
+  <thead><tr><th>项目</th><th>内容</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>公式</td><td>阿基米德原理 F浮 = ρ液 g V排；密度 ρ = m/V；重力 G = mg</td><td>教材核心公式，本页已逐条验算</td></tr>
+    <tr><td>课标条目</td><td>《义务教育物理课程标准（2022 年版）》中与浮力、阿基米德原理对应的内容要求</td><td class="todo">待核实：未取到课标原文，不写条款号与页码</td></tr>
+    <tr><td>教材页码</td><td>人教版八年级下册「浮力」一章</td><td class="todo">待核实：未核到具体版本、印次与页码</td></tr>
+    <tr><td>密度取值</td><td>水 1.0、盐水 1.1、酒精 0.8 g/cm³</td><td>常用近似值，非实测；页面上已标明</td></tr>
+  </tbody>
+</table>
+<p class="small">
+  按项目规则「每份内容必须齐备 9 项字段」，本样本第 9 项<b>未完成</b>：缺课标与教材的原文定位。
+  因此本样本状态为 <b>v0.1 草稿</b>，只能用于内部评审与访谈试用，<b>不得外发</b>。
+</p>
+
+<h2>9　字段自检（9 项）</h2>
+<table>
+  <thead><tr><th>#</th><th>字段</th><th>位置</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>学段 · 学科 · 课标条目</td><td>页首 + 第 8 节</td><td>学段学科 ✓ ／ 课标条目 <span class="todo">待补</span></td></tr>
+    <tr><td>2</td><td>器材清单（含规格 / 替代）</td><td>第 5 节</td><td>✓</td></tr>
+    <tr><td>3</td><td>操作步骤（可照做）</td><td>第 5 节</td><td>✓</td></tr>
+    <tr><td>4</td><td>参数与单位</td><td>第 4 节</td><td>✓（含量纲自查）</td></tr>
+    <tr><td>5</td><td>预期现象</td><td>第 2 节</td><td>✓（可观察、可复述）</td></tr>
+    <tr><td>6</td><td>结论（能由现象推出）</td><td>第 3 节</td><td>✓</td></tr>
+    <tr><td>7</td><td>易错点 / 迷思</td><td>第 6 节</td><td>✓</td></tr>
+    <tr><td>8</td><td>安全提示</td><td>第 7 节</td><td>✓（本页无风险也写明）</td></tr>
+    <tr><td>9</td><td>依据来源</td><td>第 8 节</td><td class="todo">✗ 待补（课标 / 教材原文）</td></tr>
+  </tbody>
+</table>
+
+<div class="foot">
+  样本 v0.1 ｜ 2026-10-20 ｜ 单文件 HTML，无外网依赖，可直接双击打开、手机浏览器可读<br>
+  由 LabLoom 项目手工产出并逐条核算；<b>AI 生成不是免责理由</b>——签约前须由教师复核第 2、3、6 节。
+</div>
+
+</div>
+<script>
+(function () {
+  var RHO = { water: 1.0, salt: 1.1, alcohol: 0.8 };
+  var SURFACE = 110, H = 80;
+  function $(id) { return document.getElementById(id); }
+  var cube = $('cube'), stringEl = $('string'), liquid = $('liquid');
+
+  function sup(n) {
+    var map = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+                '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+    return String(n).split('').map(function (c) { return map[c] || c; }).join('');
+  }
+  function sci(x) {
+    if (x === 0) { return '0'; }
+    var e = Math.floor(Math.log10(Math.abs(x)));
+    var m = x / Math.pow(10, e);
+    return m.toFixed(2) + '×10' + sup(e);
+  }
+  // 保留 3 位小数。加 1e-9 是为了抵消二进制浮点误差：
+  // 1.1×1000×9.8×25×10⁻⁶ 手算为 0.2695，但 double 存成 0.26949999…，直接 toFixed 会得到 0.269。
+  function n3(x) { return (x + 1e-9).toFixed(3); }
+
+  function render() {
+    var v = +$('v').value;
+    var p = +$('p').value;
+    var dEl = $('d');
+    dEl.disabled = p < 100;
+    if (p < 100) { dEl.value = '0'; }
+    var depth = +dEl.value;
+    var rho = RHO[$('liq').value];
+    var g = +$('gsel').value;
+
+    var vdCm3 = v * p / 100;
+    var vdM3 = vdCm3 * 1e-6;
+    var F = rho * 1000 * g * vdM3;
+
+    $('vLabel').textContent = v + ' cm³';
+    $('pLabel').textContent = p + ' %';
+    $('dLabel').textContent = depth + ' cm';
+    $('rhoLabel').textContent = rho.toFixed(1) + ' g/cm³';
+    $('vdisp').textContent = vdCm3.toFixed(1);
+    $('vm3').textContent = sci(vdM3);
+    $('rho').textContent = rho.toFixed(1);
+    $('rhokg').textContent = (rho * 1000).toFixed(0);
+    $('fb').textContent = n3(F);
+    $('gp').textContent = n3(F);
+    $('diff').textContent = '0.000 N';
+
+    var offset = p >= 100 ? depth * 4 : 0;
+    var bottom = SURFACE + (p / 100) * H + offset;
+    cube.setAttribute('y', (bottom - H).toFixed(1));
+    stringEl.setAttribute('y2', (bottom - H).toFixed(1));
+    liquid.setAttribute('y', SURFACE);
+
+    var note;
+    if (p === 0) {
+      note = '方块底面刚好接触液面：V排 = 0，F浮 = 0。';
+    } else if (p < 100) {
+      note = '部分浸入：只算液面以下那一段，V排 = ' + vdCm3.toFixed(1) + ' cm³。';
+    } else if (depth === 0) {
+      note = '刚好浸没：V排 = V。再往下沉，V排 不会变。';
+    } else {
+      note = '已浸没并继续下沉 ' + depth + ' cm：V排 仍是 ' + vdCm3.toFixed(1) +
+             ' cm³，F浮 仍是 ' + F.toFixed(3) + ' N。';
+    }
+    $('visualNote').textContent = note;
+
+    var tip;
+    if (p < 100) {
+      tip = '当前 V排 < V：若把 V 直接当 V排 代入，会高估浮力。';
+    } else if (depth === 0) {
+      tip = '浸没是这个演示的分界点：再深也不增加浮力。';
+    } else {
+      tip = '深度不进入公式：只有 ρ液 与 V排 决定 F浮。';
+    }
+    $('visualNote2').textContent = tip;
+  }
+
+  ['v', 'p', 'd', 'liq', 'gsel'].forEach(function (id) {
+    $(id).addEventListener('input', render);
+    $(id).addEventListener('change', render);
+  });
+  render();
+})();
+</script>
+</body>
+</html>
+

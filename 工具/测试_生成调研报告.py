@@ -224,6 +224,32 @@ class TestData(unittest.TestCase):
         finally:
             R.DATA["positioning"][0]["scores"]["demand"] = saved
 
+    def test_铜陵分值必须标届别(self):
+        """E6 只代表 2026 届；2027 届起已改。台账里缺届别，等于把旧形态当现状。"""
+        ev = {e["id"]: e for e in R.EVIDENCE}
+        self.assertIn("2026 届", ev["E6"]["point"])
+        self.assertEqual(ev["E27"]["level"], "E1")
+        self.assertIn("2027 届", ev["E27"]["point"])
+        self.assertIn("随机抽考 1 题", ev["E27"]["point"])
+        self.assertIn("30 分调整为 10 分", ev["E27"]["point"])
+        # 必须写明冲突来自届别，避免下一轮有人拿 E27 去删 E6
+        self.assertIn("届别不同", ev["E27"]["point"])
+
+    def test_实验室规程不得被当成安全依据(self):
+        """E28 只证明「学校侧实验操作考核是政策要求」，安全细则在未取的 docx 里。"""
+        e28 = {e["id"]: e for e in R.EVIDENCE}["E28"]
+        self.assertIn("教基二〔2009〕11 号", e28["title"])
+        self.assertIn("综合素质评价体系", e28["point"])
+        self.assertIn("不构成任何实验室安全条款的依据", e28["point"])
+
+    def test_两条新缺口已登记(self):
+        gaps = {g["item"]: g for g in R.DATA["gaps"]}
+        self.assertTrue(any("区县" in k for k in gaps))
+        self.assertTrue(any("实验室安全" in k for k in gaps))
+        for g in R.DATA["gaps"]:
+            self.assertIn(g["status"], ("未获取", "部分获取"))
+            self.assertGreater(len(g["why"]), 20)
+
 
 class TestCalc(unittest.TestCase):
     def test_weighted_scores_sorted_and_ranked(self):
@@ -265,6 +291,13 @@ class TestHtml(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.html = R.build_html()
+
+    def test_铜陵届别在页面上可读(self):
+        # 「各 10 分」必须在，但必须带届别；裸写法会被读成「铜陵现在就是各 10 分」
+        self.assertIn("2026 届", self.html)
+        self.assertIn("2027 届", self.html)
+        self.assertIn("随机抽考 1 题", self.html)
+        self.assertNotIn("铜陵物理、化学各 10 分", self.html)
 
     def test_no_cdn(self):
         # 只允许本地相对路径的 script/link；不允许任何 http(s) 资源引用
